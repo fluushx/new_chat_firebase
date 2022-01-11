@@ -68,30 +68,36 @@ class ChatViewController: MessagesViewController {
     }()
     public var isNewConverstion = false
     public var otherUserEmail :  String = ""
+    private var conversationId :  String?
     
-    var currentUser:Sender? {
+    private var selfSender:Sender? {
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
-        return Sender(senderId: email,
-                             displayName: "First Person",
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        return Sender(senderId: safeEmail,
+                             displayName: "Me",
                              photoURL: "")
          
     }
+     
+   
+    private var messages = [Message]()
     
-    
-    let anotherUser = Sender(senderId: "Second", displayName: "Second Person", photoURL: "")
-    var message = [MessageType]()
-    
-    init(with email:String) {
+    init(with email:String, id:String?) {
+        self.conversationId = id
         self.otherUserEmail = email
+        
         super.init(nibName: nil, bundle: nil)
+        if let conversationId = conversationId {
+            listenMessages(id: conversationId)
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor  = .red
@@ -101,8 +107,27 @@ class ChatViewController: MessagesViewController {
         messageInputBar.delegate = self
         messageInputBar.inputTextView.becomeFirstResponder()
         
-        
+    
     }
+     
+    private func listenMessages(id:String){
+        DatabaseManager.shared.getAllMessagesForConversations(with: id) { [weak self] result in
+            switch result {
+            case .success(let messages):
+                guard !messages.isEmpty else {
+                    return
+                }
+                self?.messages = messages
+                
+                DispatchQueue.main.async {
+                    self?.messagesCollectionView.reloadDataAndKeepOffset()
+                }
+            case .failure(let error):
+                print("failed to get messages \(error)")
+            }
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
@@ -114,7 +139,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
     
         guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
-        let selfSender = self.currentUser,
+        let selfSender = self.selfSender,
         let messageId = createMessageId() else {
             return
         }
@@ -157,18 +182,18 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
 extension ChatViewController:MessagesDataSource,MessagesLayoutDelegate,MessagesDisplayDelegate {
     
     func currentSender() -> SenderType {
-        if let sender = currentUser {
+        if let sender = selfSender {
             return sender
         }
         fatalError("error to send message   ")
-        return currentUser ?? Sender(senderId: "", displayName: "", photoURL: "")
+        return Sender(senderId: "", displayName: "", photoURL: "")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return message[indexPath.section]
+        return messages[indexPath.section]
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        message.count
+        messages.count
     }
 }

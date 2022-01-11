@@ -30,6 +30,7 @@ class ConversationsViewController: UIViewController {
     
     private let tableView : UITableView = {
         let tableView = UITableView()
+        tableView.backgroundColor = .purple
     
         tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.identifier)
         tableView.isHidden = true
@@ -144,7 +145,7 @@ class ConversationsViewController: UIViewController {
             return
         }
         
-        let vc = ChatViewController(with: email)
+        let vc = ChatViewController(with: email, id: nil)
         vc.isNewConverstion = true
         vc.title = name
         vc.navigationItem.largeTitleDisplayMode  = .never
@@ -173,13 +174,13 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         tableView.deselectRow(at: indexPath, animated: true)
 
         let model = conversations[indexPath.row]
-        let vc = ChatViewController(with: model.otherUserEmail)
+        let vc = ChatViewController(with: model.otherUserEmail, id: model.id)
         vc.title = model.name
         vc.navigationItem.largeTitleDisplayMode  = .never
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 100
     }
 }

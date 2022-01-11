@@ -17,42 +17,67 @@ class ConversationTableViewCell: UITableViewCell {
         let imageView = UIImageView()
          imageView.contentMode = .scaleAspectFill
          imageView.layer.masksToBounds = true
-         imageView.layer.cornerRadius = 50
+          
          imageView.layer.borderColor = UIColor.white.cgColor
-         imageView.layer.borderWidth =  3
-//         imageView.backgroundColor = .white
+         imageView.translatesAutoresizingMaskIntoConstraints = false
+         imageView.backgroundColor = .red
         return imageView
     }()
     private let userNameLabel: UILabel = {
        let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .gray
+//        label.textAlignment = .center
+        label.textColor = .black
         label.font = .systemFont(ofSize:21,weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .red
         return label
     }()
     
     private let userMessageLabel: UILabel = {
        let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .gray
+//        label.textAlignment = .center
+        label.textColor = .black
         label.font = .systemFont(ofSize:19,weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.backgroundColor = .red
         return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(userImageView)
-        contentView.addSubview(userNameLabel)
-        contentView.addSubview(userImageView)
+      
+        
+        
        
     }
     
+    func setUpView(){
+        contentView.addSubview(userImageView)
+        contentView.addSubview(userNameLabel)
+        contentView.addSubview(userMessageLabel)
+            
+        userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
+        userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
+        userImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -280).isActive = true
+        userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        userImageView.layer.cornerRadius = userImageView.frame.height/2
+        
+        userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10).isActive = true
+        userNameLabel.leadingAnchor.constraint(equalTo: userImageView.leadingAnchor, constant: 100).isActive = true
+        userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100).isActive = true
+        userNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50).isActive = true
+        
+        userMessageLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 10).isActive = true
+        userMessageLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15).isActive = true
+        userMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        userMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+            
+        }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        setUpView()
       
         
     }
@@ -65,7 +90,8 @@ class ConversationTableViewCell: UITableViewCell {
         self.userNameLabel.text = model.name
         
         
-        let path = "images/\(model.otherUserEmail)_profile_picture.png"
+        let path = "images\(model.otherUserEmail)_profile_picture.png"
+        print("path: \(path)")
         storageManager.shared.downloadURL(for: path, completion: { [weak self] result in
             switch result {
             case .success(let url):
