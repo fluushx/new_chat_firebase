@@ -20,7 +20,7 @@ class ConversationTableViewCell: UITableViewCell {
           
          imageView.layer.borderColor = UIColor.white.cgColor
          imageView.translatesAutoresizingMaskIntoConstraints = false
-         imageView.backgroundColor = .red
+//         imageView.backgroundColor = .red
         return imageView
     }()
     private let userNameLabel: UILabel = {
@@ -29,7 +29,7 @@ class ConversationTableViewCell: UITableViewCell {
         label.textColor = .black
         label.font = .systemFont(ofSize:21,weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .red
+//        label.backgroundColor = .red
         return label
     }()
     
@@ -40,7 +40,7 @@ class ConversationTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize:19,weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.backgroundColor = .red
+//        label.backgroundColor = .red
         return label
     }()
     
