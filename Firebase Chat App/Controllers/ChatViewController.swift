@@ -90,7 +90,7 @@ class ChatViewController: MessagesViewController {
         
         super.init(nibName: nil, bundle: nil)
         if let conversationId = conversationId {
-            listenMessages(id: conversationId)
+            listenMessages(id: conversationId, shouldScrollToBottom: true)
         }
     }
     
@@ -110,17 +110,22 @@ class ChatViewController: MessagesViewController {
     
     }
      
-    private func listenMessages(id:String){
+    private func listenMessages(id:String, shouldScrollToBottom: Bool){
         DatabaseManager.shared.getAllMessagesForConversations(with: id) { [weak self] result in
             switch result {
             case .success(let messages):
+                    print("success in getting messages")
                 guard !messages.isEmpty else {
+                    print("messages are empty")
                     return
                 }
                 self?.messages = messages
                 
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
+                    if shouldScrollToBottom {
+                        self?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
+                    }
                 }
             case .failure(let error):
                 print("failed to get messages \(error)")
@@ -171,9 +176,10 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
         guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String else {
             return nil
         }
-        
+        let randomizer = Int.random(in: 0...1000000000000000)
         let safeCurrentEmail = DatabaseManager.safeEmail(emailAddress: currentUserEmail)
-        let newIdentifier = "\(otherUserEmail)_\(safeCurrentEmail)_\(dateString)"
+//        //ojo aqui
+        let newIdentifier = "\(otherUserEmail)_\(safeCurrentEmail)_\(randomizer)"
         print("created messageId \(newIdentifier)")
         
         return newIdentifier

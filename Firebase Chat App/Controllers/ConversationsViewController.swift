@@ -163,10 +163,6 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.identifier ,for: indexPath) as! ConversationTableViewCell
         let model = conversations[indexPath.row]
         
-        for value in conversations {
-            print(value.id)
-        }
-        
         cell.configure(with: model)
         return cell
     }

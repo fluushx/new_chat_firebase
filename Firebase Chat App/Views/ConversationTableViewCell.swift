@@ -59,12 +59,12 @@ class ConversationTableViewCell: UITableViewCell {
             
         userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
         userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        userImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -280).isActive = true
+        userImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -300).isActive = true
         userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
         userImageView.layer.cornerRadius = userImageView.frame.height/2
         
         userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10).isActive = true
-        userNameLabel.leadingAnchor.constraint(equalTo: userImageView.leadingAnchor, constant: 100).isActive = true
+        userNameLabel.leadingAnchor.constraint(equalTo: userImageView.leadingAnchor, constant: 120).isActive = true
         userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100).isActive = true
         userNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50).isActive = true
         
