@@ -148,18 +148,20 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
         let messageId = createMessageId() else {
             return
         }
+        let message = Message(sender: selfSender  ,
+                              messageId: messageId,
+                              sentDate: Date(),
+                              kind: .text(text))
         //send message
         print("Sendind Text: \(text)")
         if isNewConverstion {
-            let message = Message(sender: selfSender  ,
-                                  messageId: messageId,
-                                  sentDate: Date(),
-                                  kind: .text(text))
+             
             DatabaseManager.shared.createNewConversation(with: otherUserEmail, name:self.title ?? "user",
                                                          firstMessage: message,
                                                          completion: { [weak self] success in
                                                             if success{
                                                                 print("message send")
+                                                                self?.isNewConverstion = false
                                                             } else {
                                                                 print("failed to send")
                                                             }
@@ -167,7 +169,19 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
                                                          })
         }
         else {
+            guard let conversationId = conversationId, let name = self.title else {
+                return
+            }
             //append existing conversation data
+            DatabaseManager.shared.sendMessages(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message, completion: { success in
+                if success {
+                    print("message send")
+                    
+                }else {
+                    print("message failed")
+                }
+                
+            })
             
         }
     }

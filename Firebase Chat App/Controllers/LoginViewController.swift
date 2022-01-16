@@ -223,6 +223,8 @@ class LoginViewController: UIViewController {
             }
             
             UserDefaults.standard.setValue(email, forKey: "email")
+            UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
+
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
                     let chatUser = ChatAppUser(firstName: firstName,
@@ -310,7 +312,23 @@ class LoginViewController: UIViewController {
             }
             let user = result.user
             print(" Log in User: \(user)")
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: mail)
+            DatabaseManager.shared.getDataFor(path: safeEmail, completion: { result in
+                            switch result {
+                            case .success(let data):
+                                guard let userData = data as? [String: Any],
+                                    let firstName = userData["first_name"] as? String,
+                                    let lastName = userData["last_name"] as? String else {
+                                        return
+                                }
+                                UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
+
+                            case .failure(let error):
+                                print("Failed to read data with error \(error)")
+                            }
+                        })
             UserDefaults.standard.setValue(mail, forKey: "email")
+             
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             
             
@@ -446,6 +464,7 @@ extension LoginViewController: LoginButtonDelegate{
                 return
             }
             UserDefaults.standard.setValue(userMail, forKey: "email")
+            UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
             DatabaseManager.shared.userExists(with: userMail, completion:{ exits in
                 if !exits {
                     let chatUser = ChatAppUser(firstName: firstName,
