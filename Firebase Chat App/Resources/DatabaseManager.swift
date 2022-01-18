@@ -7,6 +7,9 @@
 
 import Foundation
 import FirebaseDatabase
+import MessageKit
+import UIKit
+
 final class DatabaseManager {
     static let shared = DatabaseManager()
     private let database = Database.database().reference()
@@ -385,6 +388,27 @@ extension DatabaseManager {
                       let date = ChatViewController.dateFormatter.date(from: dateString) else {
                           return nil
                       }
+                        
+                    var kind: MessageKind?
+                    if type as? String == "photo" {
+                        //photo
+                        guard let imageUrl = URL(string: content),
+                        let placeHolder = UIImage(systemName: "plus") else {
+                            return nil
+                        }
+                        let media = Media(url: imageUrl,
+                                          image: nil,
+                                          placeholderImage: placeHolder,
+                                          size: CGSize(width: 300, height: 300))
+                        kind = .photo(media)
+                    }else {
+                        //text
+                        kind = .text(content)
+                    }
+                    guard let finalKind = kind else {
+                        return nil
+                    }
+                
                       let sender = Sender(senderId: senderEmail,
                                           displayName: name,
                                           photoURL: "")
@@ -392,7 +416,7 @@ extension DatabaseManager {
                       return Message(sender: sender,
                                      messageId: messageID,
                                      sentDate: date ,
-                                     kind: .text(content))
+                                     kind: finalKind)
             })
 
             completion(.success(messages))
@@ -433,7 +457,12 @@ extension DatabaseManager {
                 break
             case .attributedText(_):
                 break
-            case .photo(_):
+            case .photo(let mediaItem):
+//                if let targetUrl = mediaItem.url?.absoluteString {
+//                    print("message:\(message)")
+//                    message = targetUrl
+//                }
+                message = mediaItem.url?.absoluteString ?? ""
                 break
             case .video(_):
                 break
