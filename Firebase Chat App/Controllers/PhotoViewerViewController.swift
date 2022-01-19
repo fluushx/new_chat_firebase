@@ -31,7 +31,7 @@ class PhotoViewerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Photo"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+         
         navigationItem.largeTitleDisplayMode = .never
         view.addSubview(imageView)
         imageView.sd_setImage(with: self.url, completed: nil)

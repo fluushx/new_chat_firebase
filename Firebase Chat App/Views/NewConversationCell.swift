@@ -1,17 +1,19 @@
 //
-//  ConversationTableViewCell.swift
+//  NewConversationCell.swift
 //  Firebase Chat App
 //
-//  Created by Felipe Ignacio Zapata Riffo on 03-12-21.
+//  Created by MAC-DESMOBILE on 18-01-22.
 //
+
+import Foundation
 
 import UIKit
 import SDWebImage
 
 
-class ConversationTableViewCell: UITableViewCell {
+class NewConversationCell: UITableViewCell {
     
-    static let identifier = "ConversationTableViewCell"
+    static let identifier = "NewConversationCell"
 
     private let userImageView : UIImageView = {
         let imageView = UIImageView()
@@ -33,16 +35,7 @@ class ConversationTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let userMessageLabel: UILabel = {
-       let label = UILabel()
-//        label.textAlignment = .center
-        label.textColor = .black
-        label.font = .systemFont(ofSize:19,weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-//        label.backgroundColor = .red
-        return label
-    }()
+   
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -55,23 +48,17 @@ class ConversationTableViewCell: UITableViewCell {
     func setUpView(){
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
-        contentView.addSubview(userMessageLabel)
-            
+ 
         userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
         userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
         userImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -300).isActive = true
         userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
         userImageView.layer.cornerRadius = userImageView.frame.height/2
         
-        userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10).isActive = true
+        userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 30).isActive = true
         userNameLabel.leadingAnchor.constraint(equalTo: userImageView.leadingAnchor, constant: 120).isActive = true
         userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100).isActive = true
-        userNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50).isActive = true
-        
-        userMessageLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 10).isActive = true
-        userMessageLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 15).isActive = true
-        userMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
-        userMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        userNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
             
         }
     
@@ -85,12 +72,11 @@ class ConversationTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure (with model:Conversation){
-        self.userMessageLabel.text = model.lastedMessage.text
+    public func configure (with model:SearchResult){
         self.userNameLabel.text = model.name
         
         
-        let path = "images\(model.otherUserEmail)_profile_picture.png"
+        let path = "images\(model.email)_profile_picture.png"
         print("path: \(path)")
         storageManager.shared.downloadURL(for: path, completion: { [weak self] result in
             switch result {

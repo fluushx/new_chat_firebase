@@ -63,6 +63,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow acces to take a profile picture</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Please allow acces to send audio and video messages</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please allow acces to send audio and video messages</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Please allow acces to select a photo for you profile</string>
 	<key>UIApplicationSceneManifest</key>

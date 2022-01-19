@@ -24,6 +24,7 @@
 		87E50EA626E7C1B2003A798C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E50EA526E7C1B2003A798C /* DatabaseManager.swift */; };
 		87E9ED3126EA6FA6006648E0 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9ED3026EA6FA6006648E0 /* ChatViewController.swift */; };
 		87E9ED3426EA992D006648E0 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9ED3326EA992D006648E0 /* StorageManager.swift */; };
+		9CDC6E512797AF5D009698C8 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */; };
 		D7C1760E791F960F10DD0307 /* Pods_Firebase_Chat_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4110F81D9111EF3DDEE1404F /* Pods_Firebase_Chat_App.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		87E50EA526E7C1B2003A798C /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		87E9ED3026EA6FA6006648E0 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		87E9ED3326EA992D006648E0 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		9D456F9ED4F0A6DA7E80E0E1 /* Pods-Firebase Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.debug.xcconfig"; sourceTree = "<group>"; };
 		A9D5533C64320A60B9A5A4F4 /* Pods-Firebase Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.release.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +117,7 @@
 		8799758C26E683D10069C9F1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */,
 				872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */,
 				8799759026E6844A0069C9F1 /* Storyboards */,
 				8799757F26E682960069C9F1 /* Assets.xcassets */,
@@ -300,6 +303,7 @@
 				87E9ED3126EA6FA6006648E0 /* ChatViewController.swift in Sources */,
 				87E9ED3426EA992D006648E0 /* StorageManager.swift in Sources */,
 				87E50EA626E7C1B2003A798C /* DatabaseManager.swift in Sources */,
+				9CDC6E512797AF5D009698C8 /* NewConversationCell.swift in Sources */,
 				8799759A26E685FA0069C9F1 /* NewConversationViewController.swift in Sources */,
 				8799757B26E682950069C9F1 /* ConversationsViewController.swift in Sources */,
 				8799759826E685D40069C9F1 /* VideoPlayerViewController.swift in Sources */,
@@ -442,6 +446,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -456,6 +461,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TA446M72A2;
 				INFOPLIST_FILE = "Firebase Chat App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -475,6 +481,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TA446M72A2;
 				INFOPLIST_FILE = "Firebase Chat App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
