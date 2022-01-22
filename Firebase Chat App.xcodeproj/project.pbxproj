@@ -24,6 +24,8 @@
 		87E50EA626E7C1B2003A798C /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E50EA526E7C1B2003A798C /* DatabaseManager.swift */; };
 		87E9ED3126EA6FA6006648E0 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9ED3026EA6FA6006648E0 /* ChatViewController.swift */; };
 		87E9ED3426EA992D006648E0 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9ED3326EA992D006648E0 /* StorageManager.swift */; };
+		9C14187E279CB50300EC6B4F /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C14187D279CB50300EC6B4F /* LocationPickerViewController.swift */; };
+		9C141880279CBACE00EC6B4F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C14187F279CBACE00EC6B4F /* ProfileViewModel.swift */; };
 		9CDC6E512797AF5D009698C8 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */; };
 		BCF94610DAD15E361A3EBDA8 /* Pods_Firebase_Chat_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58F488240C2C13833D4FCB0 /* Pods_Firebase_Chat_App.framework */; };
 /* End PBXBuildFile section */
@@ -49,6 +51,8 @@
 		87E50EA526E7C1B2003A798C /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		87E9ED3026EA6FA6006648E0 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		87E9ED3326EA992D006648E0 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		9C14187D279CB50300EC6B4F /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
+		9C14187F279CBACE00EC6B4F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = "Firebase Chat App/Controllers/ProfileViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		A0455F9E2F3B2729F6BDC1CE /* Pods-Firebase Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.debug.xcconfig"; sourceTree = "<group>"; };
 		D58F488240C2C13833D4FCB0 /* Pods_Firebase_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Firebase_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +122,7 @@
 		8799758A26E683C50069C9F1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9C14187F279CBACE00EC6B4F /* ProfileViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 				8799759926E685FA0069C9F1 /* NewConversationViewController.swift */,
 				8799759B26E6860E0069C9F1 /* ProfileViewController.swift */,
 				87E9ED3026EA6FA6006648E0 /* ChatViewController.swift */,
+				9C14187D279CB50300EC6B4F /* LocationPickerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -311,6 +317,8 @@
 				872E03F7275A84B500110E38 /* ConversationTableViewCell.swift in Sources */,
 				8799759C26E6860E0069C9F1 /* ProfileViewController.swift in Sources */,
 				8799757926E682950069C9F1 /* SceneDelegate.swift in Sources */,
+				9C14187E279CB50300EC6B4F /* LocationPickerViewController.swift in Sources */,
+				9C141880279CBACE00EC6B4F /* ProfileViewModel.swift in Sources */,
 				8799759626E685C70069C9F1 /* PhotoViewerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

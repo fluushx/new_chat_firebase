@@ -32,12 +32,12 @@ class LoginViewController: UIViewController {
     //MARK: mailTextField
     private let mailTextField : UITextField = {
         let mailTextField = UITextField()
-        mailTextField.textColor = .black
+      
         mailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
         mailTextField.placeholder =  "Type Your Mail"
-        mailTextField.backgroundColor = .white
+        mailTextField.backgroundColor = .secondarySystemBackground
         mailTextField.layer.cornerRadius = 10
         mailTextField.layer.masksToBounds = true
         mailTextField.font = .systemFont(ofSize: 15)
@@ -55,12 +55,12 @@ class LoginViewController: UIViewController {
     //MARK: passwordTextField
     private let passwordTextField : UITextField = {
         let passwordTextField = UITextField()
-        passwordTextField.textColor = .black
+ 
         passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
         passwordTextField.placeholder = "Type Your Password"
-        passwordTextField.backgroundColor = .white
+        passwordTextField.backgroundColor = .secondarySystemBackground
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.font = .systemFont(ofSize: 15)
@@ -121,11 +121,7 @@ class LoginViewController: UIViewController {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .secondarySystemFill
         containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.lightGray.cgColor
-        containerView.layer.shadowOffset = CGSize(width:3, height:3)
-        containerView.layer.shadowOpacity = 3
-        containerView.layer.shadowRadius = 3
-        containerView.layer.borderWidth = 1
+
         containerView.layer.borderColor = UIColor.black.cgColor
         containerView.backgroundColor = .systemGray6
         return containerView
@@ -149,7 +145,7 @@ class LoginViewController: UIViewController {
     private var loginObserve : NSObjectProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Log In "
         setUpView()
         setUpRightBarButton()

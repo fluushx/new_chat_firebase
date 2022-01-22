@@ -19,27 +19,26 @@ class ConversationTableViewCell: UITableViewCell {
          imageView.layer.masksToBounds = true
          imageView.layer.borderColor = UIColor.white.cgColor
          imageView.translatesAutoresizingMaskIntoConstraints = false
-//         imageView.backgroundColor = .red
+         imageView.backgroundColor = .secondarySystemBackground
         return imageView
     }()
     private let userNameLabel: UILabel = {
        let label = UILabel()
 //        label.textAlignment = .center
-        label.textColor = .black
         label.font = .systemFont(ofSize:21,weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.backgroundColor = .red
+      
         return label
     }()
     
     private let userMessageLabel: UILabel = {
        let label = UILabel()
 //        label.textAlignment = .center
-        label.textColor = .black
+    
         label.font = .systemFont(ofSize:19,weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-//        label.backgroundColor = .red
+       
         return label
     }()
     
@@ -74,12 +73,14 @@ class ConversationTableViewCell: UITableViewCell {
             
         }
     
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         setUpView()
       
         
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

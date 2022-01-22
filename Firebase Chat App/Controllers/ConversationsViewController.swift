@@ -31,8 +31,6 @@ class ConversationsViewController: UIViewController {
     
     private let tableView : UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .purple
-    
         tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.identifier)
         tableView.isHidden = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,11 +47,13 @@ class ConversationsViewController: UIViewController {
         noConversation.translatesAutoresizingMaskIntoConstraints = false
         return noConversation
     }()
+    override open var shouldAutorotate: Bool {
+           return false
+       }
     
     private var loginObserver: NSObjectProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
