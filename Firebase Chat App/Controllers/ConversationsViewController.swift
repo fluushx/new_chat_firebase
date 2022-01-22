@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import JGProgressHUD
+import simd
 
 struct Conversation {
     let id:String
@@ -143,21 +144,57 @@ class ConversationsViewController: UIViewController {
     @objc func didTapComposeButton(){
         let vc = NewConversationViewController()
         vc.completion = { [weak self ] result in
-            self?.createNewConversation(result: result)
+            guard let strongSelf = self else {
+                return
+            }
+            let currentConversation = strongSelf.conversations
+            
+            if let tarjetConversations = currentConversation.first(where: {
+                $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
+            }){
+                let vc = ChatViewController(with: tarjetConversations.otherUserEmail, id:tarjetConversations.id)
+                vc.isNewConverstion = false
+                vc.title = tarjetConversations.name
+                vc.navigationItem.largeTitleDisplayMode  = .never
+                strongSelf.navigationController?.pushViewController(vc, animated: true)
+            }else {
+                strongSelf.createNewConversation(result: result)
+            }
         }
-        vc.title = "New Conversation"
         let navVC = UINavigationController(rootViewController: vc)
-        
-        navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true)
          
     }
     
     private func createNewConversation(result: SearchResult){
         let name = result.name
-        let email = result.email
+        let email =  DatabaseManager.safeEmail(emailAddress: result.email)
          
+        //check in database if conversation with these two user exist
+        //if it does, reuse conversation id,
+        //othewise user existing code
         
+        DatabaseManager.shared.converstionExists(with: email, completion: {
+            [weak self] result in
+            guard let strongSelf =  self else {
+                return
+            }
+            switch result{
+                
+            case .success(let conversationId):
+                let vc = ChatViewController(with: email, id: conversationId)
+                vc.isNewConverstion = false
+                vc.title = name
+                vc.navigationItem.largeTitleDisplayMode  = .never
+                strongSelf.navigationController?.pushViewController(vc, animated: true)
+            case .failure(_):
+                let vc = ChatViewController(with: email, id:nil)
+                vc.isNewConverstion = true
+                vc.title = name
+                vc.navigationItem.largeTitleDisplayMode  = .never
+                strongSelf.navigationController?.pushViewController(vc, animated: true)
+            }
+        })
         let vc = ChatViewController(with: email, id: nil)
         vc.isNewConverstion = true
         vc.title = name
@@ -183,6 +220,11 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         tableView.deselectRow(at: indexPath, animated: true)
 
         let model = conversations[indexPath.row]
+        openConversation(model)
+         
+    }
+    
+    func openConversation(_ model : Conversation){
         let vc = ChatViewController(with: model.otherUserEmail, id: model.id)
         vc.title = model.name
         vc.navigationItem.largeTitleDisplayMode  = .never
@@ -190,7 +232,7 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 120
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {

@@ -49,10 +49,11 @@ class NewConversationCell: UITableViewCell {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
  
-        userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
-        userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        userImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -300).isActive = true
-        userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
+        
+        userImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
+        userImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        userImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -250).isActive = true
+        userImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
         userImageView.layer.cornerRadius = userImageView.frame.height/2
         
         userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 30).isActive = true
