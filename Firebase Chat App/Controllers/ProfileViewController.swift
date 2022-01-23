@@ -56,6 +56,9 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             guard let strongSelf = self else {
                                                 return
                                             }
+                
+                UserDefaults.standard.set(nil, forKey: "email")
+                UserDefaults.standard.set(nil, forKey: "name")
                                             FBSDKLoginKit.LoginManager().logOut()
                                             
                                             GIDSignIn.sharedInstance.signOut()
@@ -117,7 +120,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //                }
         
          let email = UserDefaults.standard.value(forKey: "email") as? String
-        let safeEmail = DatabaseManager.safeEmail(emailAddress: email!)
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email ?? "no mail")
         let fileName = safeEmail + "_profile_picture.png"
         let path = "images"+fileName
         print(path)
@@ -148,8 +151,7 @@ extension ProfileViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let viewModel = data[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier,
-                                                         for: indexPath) as! ProfileTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
         cell.setUp(with: viewModel)
         return cell
     }
@@ -161,7 +163,6 @@ extension ProfileViewController {
     }
     
 }
-
 class ProfileTableViewCell: UITableViewCell {
 
     static let identifier = "ProfileTableViewCell"

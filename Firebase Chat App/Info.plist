@@ -61,10 +61,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Please allow acces to take a profile picture</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Please allow acces to send audio and video messages</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow acces to take a profile picture</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Please allow acces to send audio and video messages</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

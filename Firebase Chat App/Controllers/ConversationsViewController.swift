@@ -41,7 +41,6 @@ class ConversationsViewController: UIViewController {
         let noConversation = UILabel()
         noConversation.text = "No Conversations"
         noConversation.textAlignment = .center
-        noConversation.textColor = .gray
         noConversation.font = .systemFont(ofSize:21,weight: .medium)
         noConversation.isHidden = true
         noConversation.translatesAutoresizingMaskIntoConstraints = false
@@ -57,8 +56,8 @@ class ConversationsViewController: UIViewController {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        fetchConversation()
         tableView.reloadData()
+        view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
                                                             target: self,
                                                             action: #selector(didTapComposeButton))
@@ -73,7 +72,7 @@ class ConversationsViewController: UIViewController {
                                                     }
             strongSelf.startListeningForConversations()
                                                    })
-    }
+              }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -83,6 +82,14 @@ class ConversationsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setUpTableView()
+        setUpNoConversaationLabel()
+
+    }
+    
+    func setUpNoConversaationLabel(){
+        view.addSubview(noConversation)
+        noConversation.topAnchor.constraint(equalTo: tableView.topAnchor,constant: 350).isActive = true
+        noConversation.leadingAnchor.constraint(equalTo: tableView.leadingAnchor,constant: 100).isActive = true
     }
     
     private func validateAuth(){
@@ -102,9 +109,7 @@ class ConversationsViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-    func fetchConversation() {
-        tableView.isHidden = false
-    }
+     
     
     private func startListeningForConversations(){
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
@@ -121,12 +126,12 @@ class ConversationsViewController: UIViewController {
             case .success(let conversations_):
                 print("successfully got conversation models")
                 guard !conversations_.isEmpty else {
-                   
-           
+                    self?.tableView.isHidden = true
+                    self?.noConversation.isHidden = false
                     return
                 }
-             
-                
+                self?.noConversation.isHidden = true
+                self?.tableView.isHidden = false
                 self?.conversations = conversations_
                 print(self?.conversations as Any)
 
@@ -134,7 +139,8 @@ class ConversationsViewController: UIViewController {
                     self!.tableView.reloadData()
                 }
             case .failure(let error):
-                 
+                self?.tableView.isHidden = true
+                self?.noConversation.isHidden = false
                 print("failed to get convos: \(error)")
             }
             
