@@ -11,7 +11,7 @@ import FBSDKLoginKit
 import GoogleSignIn
 
 enum ProfileViewModelType {
-    case info, logout
+    case logout, info
 }
 
 struct ProfileViewModel {
@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         data.append(ProfileViewModel(viewModelType: .info,
                                              title: "Email: \(UserDefaults.standard.value(forKey:"email") as? String ?? "No Email")",
                                              handler: nil))
-        data.append(ProfileViewModel(viewModelType: .info,
+        data.append(ProfileViewModel(viewModelType: .logout,
                                              title: "Log Out",
                                              handler: { [weak self] in
             
@@ -84,18 +84,31 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = createTableHeader()
+        view.backgroundColor = .systemBackground
+        
     }
+     
     func createTableHeader()->UIView{
         
         let headerView : UIView = {
             let headerView = UIView()
-            headerView.backgroundColor = UIColor(red: 51/255.0, green: 138/255.0, blue: 255/255.0, alpha: 1.0)
+//            headerView.backgroundColor = UIColor(red: 51/255.0, green: 138/255.0, blue: 255/255.0, alpha: 1.0)
             headerView.translatesAutoresizingMaskIntoConstraints = false
             headerView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200)
             headerView.layer.borderColor = UIColor.white.cgColor
             headerView.layer.borderWidth =  3
             headerView.layer.masksToBounds = true
             
+            let background = UIImage(named: "hackerBackground")
+            var imageView : UIImageView!
+            imageView = UIImageView(frame: view.bounds)
+            imageView.contentMode =  UIView.ContentMode.scaleToFill
+            imageView.clipsToBounds = true
+            imageView.image = background
+            imageView.center = view.center
+            headerView.addSubview(imageView)
+            headerView.layer.cornerRadius = 10
+
             return headerView
         }()
         
@@ -152,6 +165,7 @@ extension ProfileViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let viewModel = data[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
+        
         cell.setUp(with: viewModel)
         return cell
     }
@@ -161,21 +175,29 @@ extension ProfileViewController {
          
          
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
     
 }
 class ProfileTableViewCell: UITableViewCell {
 
     static let identifier = "ProfileTableViewCell"
+    
 
     public func setUp(with viewModel: ProfileViewModel) {
         self.textLabel?.text = viewModel.title
         switch viewModel.viewModelType {
-        case .info:
-            textLabel?.textAlignment = .left
-            selectionStyle = .none
         case .logout:
             textLabel?.textColor = .red
             textLabel?.textAlignment = .center
+            layer.masksToBounds = true
+            textLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+
+        case .info:
+            textLabel?.textAlignment = .left
+            selectionStyle = .none
+            textLabel!.font = UIFont(name: "Avenir-Light", size: 18)
         }
     }
 

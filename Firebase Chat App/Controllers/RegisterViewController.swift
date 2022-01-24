@@ -16,7 +16,7 @@ class RegisterViewController: UIViewController {
         let logoImageView = UIImageView()
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(systemName: "person.circle")
+        logoImageView.image = UIImage(named: "initial_image_profile")
         logoImageView.tintColor = .gray
         return logoImageView
     }()
@@ -140,14 +140,9 @@ class RegisterViewController: UIViewController {
     private let containerView : UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .secondarySystemFill
+        containerView.backgroundColor = .secondarySystemBackground
         containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.lightGray.cgColor
         containerView.layer.shadowOffset = CGSize(width:3, height:3)
-        containerView.layer.shadowOpacity = 3
-        containerView.layer.shadowRadius = 3
-        containerView.layer.borderWidth = 1
-        containerView.layer.borderColor = UIColor.black.cgColor
         containerView.backgroundColor = .systemGray6
         return containerView
     }()
