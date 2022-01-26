@@ -11,6 +11,7 @@ import FBSDKLoginKit
 import GoogleSignIn
 import Firebase
 import JGProgressHUD
+import CryptoKit
 
 class LoginViewController: UIViewController {
     
@@ -32,12 +33,12 @@ class LoginViewController: UIViewController {
     //MARK: mailTextField
     private let mailTextField : UITextField = {
         let mailTextField = UITextField()
-        mailTextField.textColor = .black
+      
         mailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
         mailTextField.placeholder =  "Type Your Mail"
-        mailTextField.backgroundColor = .white
+        mailTextField.backgroundColor = .secondarySystemBackground
         mailTextField.layer.cornerRadius = 10
         mailTextField.layer.masksToBounds = true
         mailTextField.font = .systemFont(ofSize: 15)
@@ -55,12 +56,12 @@ class LoginViewController: UIViewController {
     //MARK: passwordTextField
     private let passwordTextField : UITextField = {
         let passwordTextField = UITextField()
-        passwordTextField.textColor = .black
+ 
         passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
         passwordTextField.placeholder = "Type Your Password"
-        passwordTextField.backgroundColor = .white
+        passwordTextField.backgroundColor = .secondarySystemBackground
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.font = .systemFont(ofSize: 15)
@@ -121,11 +122,7 @@ class LoginViewController: UIViewController {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .secondarySystemFill
         containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.lightGray.cgColor
-        containerView.layer.shadowOffset = CGSize(width:3, height:3)
-        containerView.layer.shadowOpacity = 3
-        containerView.layer.shadowRadius = 3
-        containerView.layer.borderWidth = 1
+
         containerView.layer.borderColor = UIColor.black.cgColor
         containerView.backgroundColor = .systemGray6
         return containerView
@@ -149,7 +146,7 @@ class LoginViewController: UIViewController {
     private var loginObserve : NSObjectProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Log In "
         setUpView()
         setUpRightBarButton()
@@ -223,6 +220,8 @@ class LoginViewController: UIViewController {
             }
             
             UserDefaults.standard.setValue(email, forKey: "email")
+            UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
+
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
                     let chatUser = ChatAppUser(firstName: firstName,
@@ -278,18 +277,19 @@ class LoginViewController: UIViewController {
     }
     //MARK: didTapLoginButton
     @objc private func didTapLoginButton(){
-        mailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
+        self.view.endEditing(true)
         guard let mail = mailTextField.text, let password = passwordTextField.text,
               !mail.isEmpty, !password.isEmpty, password.count >= 6 else {
             alertUserLoginError()
             return
         }
         
+        let hashedPassoword = CommonFunctions.sharedInstance.MD5(string: password)
+        
         spinner.show(in: view)
         
         //Log in firebase
-        FirebaseAuth.Auth.auth().signIn(withEmail: mail, password: password, completion: {
+        FirebaseAuth.Auth.auth().signIn(withEmail: mail, password: hashedPassoword, completion: {
             [weak self] authResult, error in
             guard let strongSelf = self else {
                 
@@ -310,7 +310,23 @@ class LoginViewController: UIViewController {
             }
             let user = result.user
             print(" Log in User: \(user)")
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: mail)
+            DatabaseManager.shared.getDataFor(path: safeEmail, completion: { result in
+                            switch result {
+                            case .success(let data):
+                                guard let userData = data as? [String: Any],
+                                    let firstName = userData["first_name"] as? String,
+                                    let lastName = userData["last_name"] as? String else {
+                                        return
+                                }
+                                UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
+
+                            case .failure(let error):
+                                print("Failed to read data with error \(error)")
+                            }
+                        })
             UserDefaults.standard.setValue(mail, forKey: "email")
+             
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             
             
@@ -428,7 +444,8 @@ extension LoginViewController: LoginButtonDelegate{
                                                              tokenString: token,
                                                              version: nil,
                                                              httpMethod: .get)
-        facebokRequest.start(completionHandler: { _, result, error in
+        
+        facebokRequest.start(completion: { _, result, error in
             guard let result = result as? [String:Any], error == nil else {
                 print("error to get result from graphRequest")
                 return
@@ -446,6 +463,7 @@ extension LoginViewController: LoginButtonDelegate{
                 return
             }
             UserDefaults.standard.setValue(userMail, forKey: "email")
+            UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
             DatabaseManager.shared.userExists(with: userMail, completion:{ exits in
                 if !exits {
                     let chatUser = ChatAppUser(firstName: firstName,

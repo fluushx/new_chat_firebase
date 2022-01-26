@@ -16,7 +16,7 @@ class RegisterViewController: UIViewController {
         let logoImageView = UIImageView()
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(systemName: "person.circle")
+        logoImageView.image = UIImage(named: "initial_image_profile")
         logoImageView.tintColor = .gray
         return logoImageView
     }()
@@ -24,12 +24,12 @@ class RegisterViewController: UIViewController {
     //MARK: firstNameField
     private let firstNameField : UITextField = {
        let firstNameField = UITextField()
-        firstNameField.textColor = .black
+     
         firstNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         firstNameField.translatesAutoresizingMaskIntoConstraints = false
         firstNameField.autocapitalizationType = .none
         firstNameField.placeholder =  "Type Your First Name"
-        firstNameField.backgroundColor = .white
+        firstNameField.backgroundColor = .secondarySystemBackground
         firstNameField.layer.cornerRadius = 10
         firstNameField.layer.masksToBounds = true
         firstNameField.font = .systemFont(ofSize: 15)
@@ -46,11 +46,11 @@ class RegisterViewController: UIViewController {
     //MARK: lasttNameField
     private let lasttNameField : UITextField = {
        let lasttNameField = UITextField()
-        lasttNameField.textColor = .black
+     
         lasttNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         lasttNameField.autocapitalizationType = .none
         lasttNameField.placeholder =  "Type Your Last Name"
-        lasttNameField.backgroundColor = .white
+        lasttNameField.backgroundColor = .secondarySystemBackground
         lasttNameField.layer.cornerRadius = 10
         lasttNameField.layer.masksToBounds = true
         lasttNameField.font = .systemFont(ofSize: 15)
@@ -69,12 +69,12 @@ class RegisterViewController: UIViewController {
     //MARK: mailTextField
     private let mailTextField : UITextField = {
        let mailTextField = UITextField()
-        mailTextField.textColor = .black
+        
         mailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
         mailTextField.placeholder =  "Type Your Mail"
-        mailTextField.backgroundColor = .white
+        mailTextField.backgroundColor = .secondarySystemBackground
         mailTextField.layer.cornerRadius = 10
         mailTextField.layer.masksToBounds = true
         mailTextField.font = .systemFont(ofSize: 15)
@@ -91,12 +91,12 @@ class RegisterViewController: UIViewController {
     //MARK: passwordTextField
     private let passwordTextField : UITextField = {
        let passwordTextField = UITextField()
-        passwordTextField.textColor = .black
+        
         passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
         passwordTextField.placeholder = "Type Your Password"
-        passwordTextField.backgroundColor = .white
+        passwordTextField.backgroundColor = .secondarySystemBackground
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.font = .systemFont(ofSize: 15)
@@ -140,21 +140,16 @@ class RegisterViewController: UIViewController {
     private let containerView : UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .secondarySystemFill
+        containerView.backgroundColor = .secondarySystemBackground
         containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.lightGray.cgColor
         containerView.layer.shadowOffset = CGSize(width:3, height:3)
-        containerView.layer.shadowOpacity = 3
-        containerView.layer.shadowRadius = 3
-        containerView.layer.borderWidth = 1
-        containerView.layer.borderColor = UIColor.black.cgColor
         containerView.backgroundColor = .systemGray6
         return containerView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         title = "Register"
         setUpView()
         setUpConstraints()
@@ -170,10 +165,7 @@ class RegisterViewController: UIViewController {
     //MARK:- didTapRegisterButton
 
     @objc private func didTapRegisterButton(){
-        mailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        firstNameField.resignFirstResponder()
-        lasttNameField.resignFirstResponder()
+        self.view.endEditing(true)
         guard let firstName = firstNameField.text,
               let lasttNameField = lasttNameField.text,
               let mail = mailTextField.text,
@@ -198,8 +190,11 @@ class RegisterViewController: UIViewController {
                 strongSelf.alertUserLoginError(message: "Looks like user account for thath email addres already exists")
                 return
             }
+            
+            let hashedPassoword = CommonFunctions.sharedInstance.MD5(string: password)
+            
             //Register in firebase
-            FirebaseAuth.Auth.auth().createUser(withEmail: mail, password: password, completion: { [weak self] authResult, error in
+            FirebaseAuth.Auth.auth().createUser(withEmail: mail, password: hashedPassoword, completion: { [weak self] authResult, error in
                 guard let strongSelf = self else {
                      
                     return
@@ -213,13 +208,15 @@ class RegisterViewController: UIViewController {
                                                   handler: nil))
                     return
                 }
+                UserDefaults.standard.set(mail, forKey: "email")
+                UserDefaults.standard.set("\(firstName) \(lasttNameField)", forKey: "name")
+                
                 let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail)
                 DatabaseManager.shared.insertUser(with: chatUser,completion: { success in
                     if success{
                         //upload image
                         guard let image = strongSelf.logoImageView.image,
                               let data = image.pngData() else {
-                            
                             return
                         }
                         let fileName = chatUser.profilePictureFileName
