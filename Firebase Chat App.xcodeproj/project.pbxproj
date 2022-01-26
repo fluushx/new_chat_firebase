@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08457BBD27A16C2E00BF89E4 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08457BBC27A16C2E00BF89E4 /* CommonFunctions.swift */; };
 		872E03F7275A84B500110E38 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */; };
 		8731E11726E705F80011E4E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8731E11626E705F80011E4E0 /* GoogleService-Info.plist */; };
 		8799757726E682950069C9F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799757626E682950069C9F1 /* AppDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08457BBC27A16C2E00BF89E4 /* CommonFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
 		111F522449D78F37B9DB8192 /* Pods-Firebase Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.release.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.release.xcconfig"; sourceTree = "<group>"; };
 		5885BC43CF86A8A1600058C6 /* Pods_Firebase_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Firebase_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				8799757826E682950069C9F1 /* SceneDelegate.swift */,
 				87E50EA526E7C1B2003A798C /* DatabaseManager.swift */,
 				87E9ED3326EA992D006648E0 /* StorageManager.swift */,
+				08457BBC27A16C2E00BF89E4 /* CommonFunctions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			files = (
 				8799759226E6856C0069C9F1 /* LoginViewController.swift in Sources */,
 				8799759426E6857F0069C9F1 /* RegisterViewController.swift in Sources */,
+				08457BBD27A16C2E00BF89E4 /* CommonFunctions.swift in Sources */,
 				87E9ED3126EA6FA6006648E0 /* ChatViewController.swift in Sources */,
 				87E9ED3426EA992D006648E0 /* StorageManager.swift in Sources */,
 				87E50EA626E7C1B2003A798C /* DatabaseManager.swift in Sources */,

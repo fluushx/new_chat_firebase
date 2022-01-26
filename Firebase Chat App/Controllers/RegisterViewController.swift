@@ -165,10 +165,7 @@ class RegisterViewController: UIViewController {
     //MARK:- didTapRegisterButton
 
     @objc private func didTapRegisterButton(){
-        mailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        firstNameField.resignFirstResponder()
-        lasttNameField.resignFirstResponder()
+        self.view.endEditing(true)
         guard let firstName = firstNameField.text,
               let lasttNameField = lasttNameField.text,
               let mail = mailTextField.text,
@@ -193,8 +190,11 @@ class RegisterViewController: UIViewController {
                 strongSelf.alertUserLoginError(message: "Looks like user account for thath email addres already exists")
                 return
             }
+            
+            let hashedPassoword = CommonFunctions.sharedInstance.MD5(string: password)
+            
             //Register in firebase
-            FirebaseAuth.Auth.auth().createUser(withEmail: mail, password: password, completion: { [weak self] authResult, error in
+            FirebaseAuth.Auth.auth().createUser(withEmail: mail, password: hashedPassoword, completion: { [weak self] authResult, error in
                 guard let strongSelf = self else {
                      
                     return

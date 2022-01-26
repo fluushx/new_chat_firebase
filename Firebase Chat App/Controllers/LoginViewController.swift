@@ -11,6 +11,7 @@ import FBSDKLoginKit
 import GoogleSignIn
 import Firebase
 import JGProgressHUD
+import CryptoKit
 
 class LoginViewController: UIViewController {
     
@@ -276,18 +277,19 @@ class LoginViewController: UIViewController {
     }
     //MARK: didTapLoginButton
     @objc private func didTapLoginButton(){
-        mailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
+        self.view.endEditing(true)
         guard let mail = mailTextField.text, let password = passwordTextField.text,
               !mail.isEmpty, !password.isEmpty, password.count >= 6 else {
             alertUserLoginError()
             return
         }
         
+        let hashedPassoword = CommonFunctions.sharedInstance.MD5(string: password)
+        
         spinner.show(in: view)
         
         //Log in firebase
-        FirebaseAuth.Auth.auth().signIn(withEmail: mail, password: password, completion: {
+        FirebaseAuth.Auth.auth().signIn(withEmail: mail, password: hashedPassoword, completion: {
             [weak self] authResult, error in
             guard let strongSelf = self else {
                 
@@ -442,7 +444,8 @@ extension LoginViewController: LoginButtonDelegate{
                                                              tokenString: token,
                                                              version: nil,
                                                              httpMethod: .get)
-        facebokRequest.start(completionHandler: { _, result, error in
+        
+        facebokRequest.start(completion: { _, result, error in
             guard let result = result as? [String:Any], error == nil else {
                 print("error to get result from graphRequest")
                 return
