@@ -37,9 +37,8 @@ class NewConversationCell: UITableViewCell {
     let containerImage : UIView = {
         let containerImage = UIView()
         containerImage.translatesAutoresizingMaskIntoConstraints = false
-        containerImage.layer.borderWidth =  10
+        containerImage.layer.borderWidth =  7
         containerImage.layer.masksToBounds = true
-        containerImage.backgroundColor = .secondarySystemBackground
         return containerImage
     }()
     
@@ -57,11 +56,12 @@ class NewConversationCell: UITableViewCell {
         contentView.addSubview(containerImage)
         containerImage.addSubview(userImageView)
 
-        containerImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
-        containerImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        containerImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -250).isActive = true
-        containerImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
-        containerImage.layer.cornerRadius = containerImage.frame.height/2
+        containerImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        containerImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
+        containerImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -250).isActive = true
+        containerImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
+        containerImage.layer.cornerRadius = containerImage.frame.height/2.5
+      
          
         userImageView.topAnchor.constraint(equalTo: containerImage.topAnchor, constant: 1).isActive = true
         userImageView.leadingAnchor.constraint(equalTo: containerImage.leadingAnchor, constant: 1).isActive = true
@@ -70,7 +70,7 @@ class NewConversationCell: UITableViewCell {
         userImageView.layer.cornerRadius = userImageView.frame.height/2
         
         userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 30).isActive = true
-        userNameLabel.leadingAnchor.constraint(equalTo: userImageView.leadingAnchor, constant: 50).isActive = true
+        userNameLabel.leadingAnchor.constraint(equalTo: containerImage.leadingAnchor, constant: 170).isActive = true
         userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         userNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -30).isActive = true
             

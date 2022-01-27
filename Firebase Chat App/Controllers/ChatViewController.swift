@@ -63,8 +63,6 @@ struct Media: MediaItem {
 struct Location: LocationItem {
     var location: CLLocation
     var size: CGSize
-    
-    
 }
 
 
@@ -114,7 +112,6 @@ class ChatViewController: MessagesViewController {
      
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor  = .red
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate =  self

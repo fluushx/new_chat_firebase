@@ -20,15 +20,15 @@ class LoginViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
-    private let logoImageView: UIImageView = {
-        let logoImageView = UIImageView()
-        logoImageView.contentMode = .scaleAspectFit
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(named: "logo")
-        
-        
-        return logoImageView
-    }()
+//    private let logoImageView: UIImageView = {
+//        let logoImageView = UIImageView()
+//        logoImageView.contentMode = .scaleAspectFit
+//        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+//        logoImageView.image = UIImage(named: "logo")
+//
+//
+//        return logoImageView
+//    }()
     
     //MARK: mailTextField
     private let mailTextField : UITextField = {
@@ -37,19 +37,19 @@ class LoginViewController: UIViewController {
         mailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
-        mailTextField.placeholder =  "Type Your Mail"
-        mailTextField.backgroundColor = .secondarySystemBackground
+        mailTextField.attributedPlaceholder = NSAttributedString(
+            string: "Type Your Mail",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
         mailTextField.layer.cornerRadius = 10
         mailTextField.layer.masksToBounds = true
         mailTextField.font = .systemFont(ofSize: 15)
         mailTextField.leftViewMode = .always
-        mailTextField.layer.shadowColor = UIColor.lightGray.cgColor
-        mailTextField.layer.shadowOffset = CGSize(width:3, height:3)
-        mailTextField.layer.shadowOpacity = 3
         mailTextField.layer.shadowRadius = 3
         mailTextField.layer.borderWidth = 0.5
         mailTextField.layer.borderColor = UIColor.black.cgColor
         mailTextField.autocorrectionType = .no
+        mailTextField.textColor = .white
         return mailTextField
     }()
     
@@ -60,24 +60,22 @@ class LoginViewController: UIViewController {
         passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
-        passwordTextField.placeholder = "Type Your Password"
-        passwordTextField.backgroundColor = .secondarySystemBackground
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Type Your Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.font = .systemFont(ofSize: 15)
         passwordTextField.leftViewMode = .always
-        passwordTextField.layer.shadowColor = UIColor.lightGray.cgColor
-        passwordTextField.layer.shadowOffset = CGSize(width:3, height:3)
-        passwordTextField.layer.shadowOpacity = 3
-        passwordTextField.layer.shadowRadius = 3
         passwordTextField.layer.borderWidth = 0.5
         passwordTextField.layer.borderColor = UIColor.black.cgColor
-        passwordTextField.textColor = .black
         passwordTextField.returnKeyType = .done
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
         passwordTextField.isSecureTextEntry = true
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.textColor = .white
         return passwordTextField
     }()
     
@@ -85,17 +83,12 @@ class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let loginButton = UIButton()
         loginButton.setTitle("Login", for: .normal)
-        loginButton.setTitleColor(.black, for: .normal)
-        loginButton.backgroundColor = .link
         loginButton.layer.cornerRadius = 10
         loginButton.layer.masksToBounds = true
         loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.layer.shadowColor = UIColor.lightGray.cgColor
-        loginButton.layer.shadowOffset = CGSize(width:3, height:3)
-        loginButton.layer.shadowOpacity = 3
         loginButton.layer.shadowRadius = 3
-        loginButton.layer.borderWidth = 0.5
-        loginButton.layer.borderColor = UIColor.black.cgColor
+        loginButton.layer.borderWidth = 5
+        loginButton.backgroundColor = UIColor(red: 160 / 255.0, green: 170 / 255.0, blue: 200 / 255.0, alpha: 1.0)
         loginButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         return loginButton
@@ -120,11 +113,11 @@ class LoginViewController: UIViewController {
     private let containerView : UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .secondarySystemFill
+        containerView.backgroundColor = .secondarySystemBackground
         containerView.layer.cornerRadius = 12
 
         containerView.layer.borderColor = UIColor.black.cgColor
-        containerView.backgroundColor = .systemGray6
+        containerView.backgroundColor = .black
         return containerView
     }()
     
@@ -143,21 +136,61 @@ class LoginViewController: UIViewController {
         return googleButton
     }()
     
+    
+    //------------------------------------new-------
+    
+    
+    let bgImageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "screen")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    let logoImageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.alpha = 0.8
+        imageView.image = UIImage(named: "anonymus")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    let bgView : UIView = {
+        let bgView = UIView()
+        bgView.translatesAutoresizingMaskIntoConstraints = false
+        bgView.backgroundColor = UIColor(displayP3Red: 9.0/255.0, green: 33.0/255.0, blue: 47.0/255.0, alpha: 1.0).withAlphaComponent(0.7)
+        return bgView
+    }()
+    
+    let imgView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    let lineView : UIView = {
+        let bgView = UIView()
+        bgView.translatesAutoresizingMaskIntoConstraints = false
+        bgView.backgroundColor = UIColor.white
+        return bgView
+    }()
+    
+    
     private var loginObserve : NSObjectProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Log In "
-        setUpView()
+ //        setUpView()
         setUpRightBarButton()
-        setUpConstraints()
+//        setUpConstraints()
+        addingUIElements()
         mailTextField.delegate = self
         passwordTextField.delegate = self
         logoImageView.isUserInteractionEnabled = true
         containerView.isUserInteractionEnabled =  true
-        let gesture = UITapGestureRecognizer(target: self,
-                                             action: #selector(didTapChangeProfilePic))
-        logoImageView.addGestureRecognizer(gesture)
         facebokButton.delegate = self
         _ = NotificationCenter.default.addObserver(forName: .didLogInNotification,
                                                    object: nil,
@@ -178,7 +211,6 @@ class LoginViewController: UIViewController {
     }
     @objc func didTapRegisterButton(){
         let vc = RegisterViewController()
-        vc.title = "Create Account"
         navigationController?.pushViewController(vc, animated: true)
     }
     //MARK: didTapButtonGoogle
@@ -339,10 +371,7 @@ class LoginViewController: UIViewController {
         
     }
     
-    @objc private func didTapChangeProfilePic(){
-        print("tap")
-    }
-    
+  
     func alertUserLoginError(message:String = "Please enter information to log in"){
         let alert = UIAlertController(title: "Woops",
                                       message: message,
@@ -361,6 +390,8 @@ class LoginViewController: UIViewController {
                                                             action: #selector(didTapRegisterButton))
     }
     
+    
+    
     func setUpView(){
         view.addSubview(logoImageView)
         view.addSubview(containerView)
@@ -371,6 +402,7 @@ class LoginViewController: UIViewController {
         view.addSubview(googleButton)
         
     }
+    
     
     func setUpConstraints(){
         
@@ -414,6 +446,77 @@ class LoginViewController: UIViewController {
         googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
     }
+    
+    //----------new-------
+    func addingUIElements() {
+        let padding: CGFloat = 40.0
+        let signInButtonHeight: CGFloat = 50.0
+        let textFieldViewHeight: CGFloat = 60.0
+        
+        // Background imageview
+        self.view.addSubview(bgImageView)
+        bgImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        bgImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        bgImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        bgImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        
+        // Background layer view
+        view.insertSubview(bgView, aboveSubview: bgImageView)
+        bgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        bgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        bgView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        bgView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        
+        // Logo at top
+        view.insertSubview(logoImageView, aboveSubview: bgView)
+        logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60.0).isActive = true
+        logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0.0).isActive = true
+        logoImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4).isActive = true
+        logoImageView.widthAnchor.constraint(equalTo: logoImageView.heightAnchor, constant: 0.0).isActive = true
+        
+        
+        //MARK:- containerView
+        view.insertSubview(containerView, aboveSubview: logoImageView)
+        containerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20).isActive = true
+        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        containerView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        //MARK:- mailTextField
+        view.insertSubview(mailTextField, aboveSubview: containerView)
+        mailTextField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15).isActive = true
+        mailTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
+        mailTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive = true
+        mailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        //MARK:- passwordTextField
+        view.insertSubview(passwordTextField, aboveSubview: containerView)
+        passwordTextField.topAnchor.constraint(equalTo: mailTextField.bottomAnchor, constant: 15).isActive = true
+        passwordTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
+        passwordTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive = true
+        passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        //MARK:- loginButton
+        view.insertSubview(loginButton, aboveSubview: containerView)
+        loginButton.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 20).isActive = true
+        loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        //MARK:- facebookButton
+        view.insertSubview(facebokButton, aboveSubview: loginButton)
+        facebokButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10).isActive = true
+        facebokButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 33).isActive = true
+        facebokButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22).isActive = true
+        
+        //MARK:- googleButton
+        view.insertSubview(googleButton, aboveSubview: facebokButton)
+        googleButton.topAnchor.constraint(equalTo: facebokButton.bottomAnchor, constant: 10).isActive = true
+        googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+    }
+    
 }
 extension LoginViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

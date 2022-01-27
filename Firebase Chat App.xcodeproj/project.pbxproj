@@ -27,6 +27,7 @@
 		87E9ED3426EA992D006648E0 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E9ED3326EA992D006648E0 /* StorageManager.swift */; };
 		9C14187E279CB50300EC6B4F /* LocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C14187D279CB50300EC6B4F /* LocationPickerViewController.swift */; };
 		9C26E2F1AF1C32199D16747F /* Pods_Firebase_Chat_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5885BC43CF86A8A1600058C6 /* Pods_Firebase_Chat_App.framework */; };
+		9CC4385F27A227890016FB88 /* oldLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC4385E27A227890016FB88 /* oldLoginViewController.swift */; };
 		9CDC6E512797AF5D009698C8 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		87E9ED3026EA6FA6006648E0 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		87E9ED3326EA992D006648E0 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		9C14187D279CB50300EC6B4F /* LocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerViewController.swift; sourceTree = "<group>"; };
+		9CC4385E27A227890016FB88 /* oldLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oldLoginViewController.swift; sourceTree = "<group>"; };
 		9CDC6E502797AF5D009698C8 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		F4209954C040D1F0FC77CFE6 /* Pods-Firebase Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +179,7 @@
 			children = (
 				8799759126E6856C0069C9F1 /* LoginViewController.swift */,
 				8799759326E6857F0069C9F1 /* RegisterViewController.swift */,
+				9CC4385E27A227890016FB88 /* oldLoginViewController.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CC4385F27A227890016FB88 /* oldLoginViewController.swift in Sources */,
 				8799759226E6856C0069C9F1 /* LoginViewController.swift in Sources */,
 				8799759426E6857F0069C9F1 /* RegisterViewController.swift in Sources */,
 				08457BBD27A16C2E00BF89E4 /* CommonFunctions.swift in Sources */,

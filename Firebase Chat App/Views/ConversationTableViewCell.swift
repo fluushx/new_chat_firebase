@@ -25,9 +25,8 @@ class ConversationTableViewCell: UITableViewCell {
     let containerImage : UIView = {
         let containerImage = UIView()
         containerImage.translatesAutoresizingMaskIntoConstraints = false
-        containerImage.layer.borderWidth =  10
+        containerImage.layer.borderWidth =  7
         containerImage.layer.masksToBounds = true
-        containerImage.backgroundColor = .red
         return containerImage
     }()
     
@@ -35,6 +34,7 @@ class ConversationTableViewCell: UITableViewCell {
     private let userNameLabel: UILabel = {
        let label = UILabel()
 //        label.textAlignment = .center
+        label.textColor = .white
         label.font = .systemFont(ofSize:21,weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -43,7 +43,7 @@ class ConversationTableViewCell: UITableViewCell {
     private let userMessageLabel: UILabel = {
        let label = UILabel()
 //        label.textAlignment = .center
-    
+        label.textColor = .white
         label.font = .systemFont(ofSize:19,weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -65,27 +65,26 @@ class ConversationTableViewCell: UITableViewCell {
         contentView.addSubview(containerImage)
         containerImage.addSubview(userImageView)
 
-        containerImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
-        containerImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        containerImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -250).isActive = true
-        containerImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
-        containerImage.layer.cornerRadius = containerImage.frame.height/2
+        containerImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        containerImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
+        containerImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -250).isActive = true
+        containerImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
+        containerImage.layer.cornerRadius = containerImage.frame.height/2.5
          
-        userImageView.topAnchor.constraint(equalTo: containerImage.topAnchor, constant: 1).isActive = true
+        userImageView.topAnchor.constraint(equalTo: containerImage.topAnchor, constant: 5).isActive = true
         userImageView.leadingAnchor.constraint(equalTo: containerImage.leadingAnchor, constant: 1).isActive = true
         userImageView.trailingAnchor.constraint(equalTo: containerImage.trailingAnchor, constant: -1).isActive = true
-        userImageView.bottomAnchor.constraint(equalTo: containerImage.bottomAnchor, constant: -1).isActive = true
+        userImageView.bottomAnchor.constraint(equalTo: containerImage.bottomAnchor, constant: -5).isActive = true
         userImageView.layer.cornerRadius = userImageView.frame.height/2
         
         userNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10).isActive = true
-        userNameLabel.leadingAnchor.constraint(equalTo: containerImage.leadingAnchor, constant: 170).isActive = true
+        userNameLabel.leadingAnchor.constraint(equalTo: containerImage.leadingAnchor, constant: 150).isActive = true
         userNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
         userNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50).isActive = true
         
         userMessageLabel.topAnchor.constraint(equalTo: userNameLabel.bottomAnchor, constant: 10).isActive = true
-        userMessageLabel.leadingAnchor.constraint(equalTo: containerImage.trailingAnchor, constant: 5).isActive = true
-        userMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25).isActive = true
-        userMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        userMessageLabel.leadingAnchor.constraint(equalTo: containerImage.trailingAnchor, constant: 30).isActive = true
+    
             
         }
     

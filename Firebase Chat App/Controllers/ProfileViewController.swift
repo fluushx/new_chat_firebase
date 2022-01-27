@@ -34,6 +34,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        tableView.backgroundColor = .lightGray
         data.append(ProfileViewModel(viewModelType: .info,
                                              title: "Name: \(UserDefaults.standard.value(forKey:"name") as? String ?? "No Name")",
                                              handler: nil))
@@ -165,7 +166,7 @@ extension ProfileViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let viewModel = data[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier, for: indexPath) as! ProfileTableViewCell
-        
+        cell.backgroundColor = .lightGray
         cell.setUp(with: viewModel)
         return cell
     }
