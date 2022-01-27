@@ -16,103 +16,118 @@ class RegisterViewController: UIViewController {
         let logoImageView = UIImageView()
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(systemName: "person.circle")
+        logoImageView.image = UIImage(named: "initial_image_profile")
         logoImageView.tintColor = .gray
         return logoImageView
     }()
     
+    let bgView : UIView = {
+        let bgView = UIView()
+        bgView.translatesAutoresizingMaskIntoConstraints = false
+        bgView.backgroundColor = UIColor(displayP3Red: 9.0/255.0, green: 33.0/255.0, blue: 47.0/255.0, alpha: 1.0).withAlphaComponent(0.7)
+        return bgView
+    }()
+    let bgImageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "crop")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
     //MARK: firstNameField
     private let firstNameField : UITextField = {
        let firstNameField = UITextField()
-        firstNameField.textColor = .black
+     
         firstNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         firstNameField.translatesAutoresizingMaskIntoConstraints = false
         firstNameField.autocapitalizationType = .none
-        firstNameField.placeholder =  "Type Your First Name"
-        firstNameField.backgroundColor = .white
+        firstNameField.attributedPlaceholder = NSAttributedString(
+            string: "Type Your First Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
         firstNameField.layer.cornerRadius = 10
         firstNameField.layer.masksToBounds = true
         firstNameField.font = .systemFont(ofSize: 15)
-        firstNameField.leftViewMode = .always
-        firstNameField.layer.shadowColor = UIColor.lightGray.cgColor
-        firstNameField.layer.shadowOffset = CGSize(width:3, height:3)
-        firstNameField.layer.shadowOpacity = 3
         firstNameField.layer.shadowRadius = 3
         firstNameField.layer.borderWidth = 0.5
         firstNameField.layer.borderColor = UIColor.black.cgColor
         firstNameField.autocorrectionType = .no
+        firstNameField.textColor = .white
+
         return firstNameField
     }()
     //MARK: lasttNameField
     private let lasttNameField : UITextField = {
        let lasttNameField = UITextField()
-        lasttNameField.textColor = .black
+     
         lasttNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         lasttNameField.autocapitalizationType = .none
-        lasttNameField.placeholder =  "Type Your Last Name"
-        lasttNameField.backgroundColor = .white
+        lasttNameField.attributedPlaceholder = NSAttributedString(
+            string: "Type Your Last Name",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
         lasttNameField.layer.cornerRadius = 10
         lasttNameField.layer.masksToBounds = true
         lasttNameField.font = .systemFont(ofSize: 15)
         lasttNameField.leftViewMode = .always
         lasttNameField.layer.shadowColor = UIColor.lightGray.cgColor
-        lasttNameField.layer.shadowOffset = CGSize(width:3, height:3)
-        lasttNameField.layer.shadowOpacity = 3
         lasttNameField.layer.shadowRadius = 3
         lasttNameField.layer.borderWidth = 0.5
         lasttNameField.layer.borderColor = UIColor.black.cgColor
         lasttNameField.autocorrectionType = .no
         lasttNameField.translatesAutoresizingMaskIntoConstraints = false
+        lasttNameField.textColor = .white
         return lasttNameField
     }()
     
     //MARK: mailTextField
     private let mailTextField : UITextField = {
        let mailTextField = UITextField()
-        mailTextField.textColor = .black
+        
         mailTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
-        mailTextField.placeholder =  "Type Your Mail"
-        mailTextField.backgroundColor = .white
+        mailTextField.attributedPlaceholder = NSAttributedString(
+            string: "Type your email",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
         mailTextField.layer.cornerRadius = 10
         mailTextField.layer.masksToBounds = true
         mailTextField.font = .systemFont(ofSize: 15)
         mailTextField.leftViewMode = .always
         mailTextField.layer.shadowColor = UIColor.lightGray.cgColor
-        mailTextField.layer.shadowOffset = CGSize(width:3, height:3)
-        mailTextField.layer.shadowOpacity = 3
-        mailTextField.layer.shadowRadius = 3
         mailTextField.layer.borderWidth = 0.5
         mailTextField.layer.borderColor = UIColor.black.cgColor
         mailTextField.autocorrectionType = .no
+        mailTextField.textColor = .white
         return mailTextField
     }()
     //MARK: passwordTextField
     private let passwordTextField : UITextField = {
        let passwordTextField = UITextField()
-        passwordTextField.textColor = .black
+        
         passwordTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
-        passwordTextField.placeholder = "Type Your Password"
-        passwordTextField.backgroundColor = .white
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Type Your password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
+        )
         passwordTextField.layer.cornerRadius = 10
         passwordTextField.layer.masksToBounds = true
         passwordTextField.font = .systemFont(ofSize: 15)
         passwordTextField.leftViewMode = .always
         passwordTextField.layer.shadowColor = UIColor.lightGray.cgColor
-        passwordTextField.layer.shadowOffset = CGSize(width:3, height:3)
-        passwordTextField.layer.shadowOpacity = 3
-        passwordTextField.layer.shadowRadius = 3
+
         passwordTextField.layer.borderWidth = 0.5
         passwordTextField.layer.borderColor = UIColor.black.cgColor
-        passwordTextField.textColor = .black
+        passwordTextField.textColor = .white
         passwordTextField.returnKeyType = .done
         passwordTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
         passwordTextField.isSecureTextEntry = true
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.textColor = .white
         return passwordTextField
     }()
      
@@ -132,6 +147,8 @@ class RegisterViewController: UIViewController {
         loginButton.layer.borderWidth = 0.5
         loginButton.layer.borderColor = UIColor.black.cgColor
         loginButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        loginButton.backgroundColor = UIColor(red: 160 / 255.0, green: 170 / 255.0, blue: 200 / 255.0, alpha: 1.0)
+
         loginButton.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
         return loginButton
     }()
@@ -140,22 +157,16 @@ class RegisterViewController: UIViewController {
     private let containerView : UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .secondarySystemFill
+        containerView.backgroundColor = .secondarySystemBackground
         containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.lightGray.cgColor
-        containerView.layer.shadowOffset = CGSize(width:3, height:3)
-        containerView.layer.shadowOpacity = 3
-        containerView.layer.shadowRadius = 3
-        containerView.layer.borderWidth = 1
         containerView.layer.borderColor = UIColor.black.cgColor
-        containerView.backgroundColor = .systemGray6
+        containerView.backgroundColor = .black
         return containerView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "Register"
+        view.backgroundColor = .systemBackground
         setUpView()
         setUpConstraints()
         mailTextField.delegate = self
@@ -170,10 +181,7 @@ class RegisterViewController: UIViewController {
     //MARK:- didTapRegisterButton
 
     @objc private func didTapRegisterButton(){
-        mailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        firstNameField.resignFirstResponder()
-        lasttNameField.resignFirstResponder()
+        self.view.endEditing(true)
         guard let firstName = firstNameField.text,
               let lasttNameField = lasttNameField.text,
               let mail = mailTextField.text,
@@ -198,8 +206,12 @@ class RegisterViewController: UIViewController {
                 strongSelf.alertUserLoginError(message: "Looks like user account for thath email addres already exists")
                 return
             }
+            
+            let hashedPassoword = CommonFunctions.sharedInstance.MD5(string: password)
+            print("hashedPassoword\(hashedPassoword)")
+            
             //Register in firebase
-            FirebaseAuth.Auth.auth().createUser(withEmail: mail, password: password, completion: { [weak self] authResult, error in
+            FirebaseAuth.Auth.auth().createUser(withEmail: mail, password: hashedPassoword, completion: { [weak self] authResult, error in
                 guard let strongSelf = self else {
                      
                     return
@@ -213,13 +225,15 @@ class RegisterViewController: UIViewController {
                                                   handler: nil))
                     return
                 }
+                UserDefaults.standard.set(mail, forKey: "email")
+                UserDefaults.standard.set("\(firstName) \(lasttNameField)", forKey: "name")
+                
                 let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail)
                 DatabaseManager.shared.insertUser(with: chatUser,completion: { success in
                     if success{
                         //upload image
                         guard let image = strongSelf.logoImageView.image,
                               let data = image.pngData() else {
-                            
                             return
                         }
                         let fileName = chatUser.profilePictureFileName
@@ -266,58 +280,80 @@ class RegisterViewController: UIViewController {
     func setUpView(){
         view.addSubview(logoImageView)
         view.addSubview(containerView)
-        containerView.addSubview(mailTextField)
-        containerView.addSubview(passwordTextField)
-        containerView.addSubview(firstNameField)
-        containerView.addSubview(lasttNameField)
-        view.addSubview(loginButton)
-         
+//        containerView.addSubview(mailTextField)
+//        containerView.addSubview(passwordTextField)
+//        containerView.addSubview(firstNameField)
+//        containerView.addSubview(lasttNameField)
+//        view.addSubview(loginButton)
+        self.view.addSubview(bgImageView)
     }
     //MARK:- setUpConstraints
     func setUpConstraints(){
-         
-        //MARK:- imageLoginCenter
-        logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 120).isActive = true
-        logoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -120).isActive = true
-        logoImageView.heightAnchor.constraint(equalToConstant: 180).isActive = true
- 
+        // Background imageview
+        self.view.addSubview(bgImageView)
+        bgImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        bgImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        bgImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        bgImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        
+        // Background layer view
+        view.insertSubview(bgView, aboveSubview: bgImageView)
+        bgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0).isActive = true
+        bgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0).isActive = true
+        bgView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+        bgView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        
+        // Logo at top
+        view.insertSubview(logoImageView, aboveSubview: bgView)
+        logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60.0).isActive = true
+        logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0.0).isActive = true
+        logoImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4).isActive = true
+        logoImageView.widthAnchor.constraint(equalTo: logoImageView.heightAnchor, constant: 0.0).isActive = true
+        
         
         //MARK:- containerView
-        containerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 10).isActive = true
+        view.insertSubview(containerView, aboveSubview: logoImageView)
+        containerView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20).isActive = true
         containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         containerView.heightAnchor.constraint(equalToConstant: 280).isActive = true
-         
+        
         //MARK:- firstNameField
+        view.insertSubview(firstNameField, aboveSubview: containerView)
         firstNameField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15).isActive = true
         firstNameField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
         firstNameField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive = true
         firstNameField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        //MARK:- lastNameField
+
+           //MARK:- lastNameField
+        view.insertSubview(lasttNameField, aboveSubview: containerView)
         lasttNameField.topAnchor.constraint(equalTo: firstNameField.bottomAnchor, constant: 15).isActive = true
         lasttNameField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
         lasttNameField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive = true
         lasttNameField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        //MARK:- mailTextField
+
+           //MARK:- mailTextField
+        view.insertSubview(mailTextField, aboveSubview: containerView)
         mailTextField.topAnchor.constraint(equalTo: lasttNameField.bottomAnchor, constant: 15).isActive = true
         mailTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
         mailTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive = true
         mailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-         
-        //MARK:- passwordTextField
+
+           //MARK:- passwordTextField
+        view.insertSubview(passwordTextField, aboveSubview: containerView)
         passwordTextField.topAnchor.constraint(equalTo: mailTextField.bottomAnchor, constant: 15).isActive = true
         passwordTextField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10).isActive = true
         passwordTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10).isActive = true
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         //MARK:- loginButton
+        view.insertSubview(loginButton, aboveSubview: passwordTextField)
         loginButton.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 20).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+
+         
     }
 }
 extension RegisterViewController : UITextFieldDelegate {

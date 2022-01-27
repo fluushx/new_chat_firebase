@@ -61,8 +61,12 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Please allow acces to send audio and video messages</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please allow acces to take a profile picture</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please allow acces to send audio and video messages</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Please allow acces to select a photo for you profile</string>
 	<key>UIApplicationSceneManifest</key>
@@ -97,8 +101,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
