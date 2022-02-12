@@ -19,13 +19,16 @@ final class storageManager {
                                      fileName:String,
                                      completion:@escaping UploadPictureComplations) {
         
-        storage.child("images\(fileName)").putData(data,metadata: nil,completion: {metadata,error in
+        storage.child("images\(fileName)").putData(data,metadata: nil,completion: { [weak self] metadata,error in
+            guard let strongSelf = self else {
+                return
+            }
             guard error == nil else {
                 print("failed to upload picture to firebase")
                 completion(.failure(StorageErrors.failedToUpload))
                 return
             }
-            self.storage.child("images\(fileName)").downloadURL(completion: { url, error in
+            strongSelf.storage.child("images\(fileName)").downloadURL(completion: { url, error in
                 guard let url = url else {
                     print("failed to get download url")
                     completion(.failure(StorageErrors.failedToGetDownloadURL))
@@ -45,13 +48,17 @@ final class storageManager {
                                      fileName:String,
                                      completion: @escaping UploadPictureComplations) {
         
-        storage.child("message_images/\(fileName)").putData(data, metadata: nil, completion: { metadata, error in
+        storage.child("message_images/\(fileName)").putData(data, metadata: nil, completion: { [weak self] metadata, error in
+            guard let strongSelf = self else {
+                return
+            }
             guard error == nil else {
                 print("failed to upload picture to firebase")
                 completion(.failure(StorageErrors.failedToUpload))
                 return
             }
-            self.storage.child("message_images/\(fileName)").downloadURL(completion: { url, error in
+            strongSelf.storage.child("message_images/\(fileName)").downloadURL(completion: { url, error in
+                
                 guard let url = url else {
                     print("failed to get download url")
                     completion(.failure(StorageErrors.failedToGetDownloadURL))
@@ -76,7 +83,7 @@ final class storageManager {
                 completion(.failure(StorageErrors.failedToUpload))
                 return
             }
-            self?.storage.child("message_videoss/\(fileName)").downloadURL(completion: { url, error in
+            self?.storage.child("message_videos/\(fileName)").downloadURL(completion: { url, error in
                 guard let url = url else {
                     print("failed to get download url")
                     completion(.failure(StorageErrors.failedToGetDownloadURL))

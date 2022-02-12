@@ -439,7 +439,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
                                                         completion: { success in
                         if success {
                             //
-                            print("sent photo message")
+                            print("sent video message")
                         } else {
                             print("failed to send photo message")
                         }

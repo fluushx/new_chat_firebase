@@ -392,16 +392,16 @@ class LoginViewController: UIViewController {
     
     
     
-    func setUpView(){
-        view.addSubview(logoImageView)
-        view.addSubview(containerView)
-        containerView.addSubview(mailTextField)
-        containerView.addSubview(passwordTextField)
-        view.addSubview(loginButton)
-        view.addSubview(facebokButton)
-        view.addSubview(googleButton)
-        
-    }
+//    func setUpView(){
+//        view.addSubview(logoImageView)
+//        view.addSubview(containerView)
+//        containerView.addSubview(mailTextField)
+//        containerView.addSubview(passwordTextField)
+//        view.addSubview(loginButton)
+//        view.addSubview(facebokButton)
+//        view.addSubview(googleButton)
+//
+//    }
     
     
     func setUpConstraints(){
@@ -504,16 +504,16 @@ class LoginViewController: UIViewController {
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
         //MARK:- facebookButton
-        view.insertSubview(facebokButton, aboveSubview: loginButton)
-        facebokButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10).isActive = true
-        facebokButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 33).isActive = true
-        facebokButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22).isActive = true
-        
-        //MARK:- googleButton
-        view.insertSubview(googleButton, aboveSubview: facebokButton)
-        googleButton.topAnchor.constraint(equalTo: facebokButton.bottomAnchor, constant: 10).isActive = true
-        googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
-        googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+//        view.insertSubview(facebokButton, aboveSubview: loginButton)
+//        facebokButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10).isActive = true
+//        facebokButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 33).isActive = true
+//        facebokButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22).isActive = true
+//
+//        //MARK:- googleButton
+//        view.insertSubview(googleButton, aboveSubview: facebokButton)
+//        googleButton.topAnchor.constraint(equalTo: facebokButton.bottomAnchor, constant: 10).isActive = true
+//        googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+//        googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
     }
     

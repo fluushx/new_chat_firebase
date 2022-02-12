@@ -34,6 +34,8 @@ class ConversationsViewController: UIViewController {
         tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.identifier)
         tableView.isHidden = true
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.scroll(to: .top, animated: true)
+        
         return tableView
     }()
     
@@ -54,6 +56,7 @@ class ConversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
+        view.backgroundColor = .black
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
@@ -133,10 +136,12 @@ class ConversationsViewController: UIViewController {
                 self?.noConversation.isHidden = true
                 self?.tableView.isHidden = false
                 self?.conversations = conversations_
+                
                 print(self?.conversations as Any)
-
+                
                 DispatchQueue.main.async {
                     self!.tableView.reloadData()
+                    self!.tableView.scroll(to: .top, animated: true)
                 }
             case .failure(let error):
                 self?.tableView.isHidden = true
@@ -253,15 +258,16 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         return .delete
     }
     
+    //delete conve
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let conversationId = conversations[indexPath.row].id
         if editingStyle == .delete{
             //begin delete
             tableView.beginUpdates()
             DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { [weak self] success in
-                if success {
-                    self?.conversations.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .left)
+                if !success {
+//                    self?.conversations.remove(at: indexPath.row)
+//                    tableView.deleteRows(at: [indexPath], with: .left)
 
                 }
             
@@ -271,4 +277,41 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         }
     }
     
+}
+
+extension UITableView {
+
+    public func reloadData(_ completion: @escaping ()->()) {
+        UIView.animate(withDuration: 0, animations: {
+            self.reloadData()
+        }, completion:{ _ in
+            completion()
+        })
+    }
+
+    func scroll(to: scrollsTo, animated: Bool) {
+        print("scrolling")
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+            let numberOfSections = self.numberOfSections
+            let numberOfRows = self.numberOfRows(inSection: numberOfSections-1)
+            switch to{
+            case .top:
+                if numberOfRows > 0 {
+                     let indexPath = IndexPath(row: 0, section: 0)
+                     self.scrollToRow(at: indexPath, at: .top, animated: animated)
+                }
+                break
+            case .bottom:
+                if numberOfRows > 0 {
+                    let indexPath = IndexPath(row: numberOfRows-1, section: (numberOfSections-1))
+                    self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+                }
+                break
+            }
+        }
+    }
+
+    enum scrollsTo {
+        case top,bottom
+    }
 }

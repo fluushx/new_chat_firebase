@@ -87,13 +87,17 @@ extension DatabaseManager {
             "first_name": user.firstName,
             "last_name": user.lastName
             
-        ],withCompletionBlock: { error, _ in
+        ],withCompletionBlock: { [weak self] error, _ in
+            
+            guard let strongSelf = self else {
+                return
+            }
             guard error == nil else {
                 print("failed to write to database")
                 completion(false)
                 return
             }
-            self.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            strongSelf.database.child("users").observeSingleEvent(of: .value, with: { snapshot in
                     if var usersColecction = snapshot.value as? [[String:String]] {
                     //append  to user dictionary
                         let newElement = [
@@ -102,7 +106,7 @@ extension DatabaseManager {
                             ]
                         
                         usersColecction.append(newElement)
-                        self.database.child("users").setValue(usersColecction,withCompletionBlock: { error, _ in
+                        strongSelf.database.child("users").setValue(usersColecction,withCompletionBlock: { error, _ in
                             guard error == nil else {
                                 completion(false)
                                 return
@@ -118,7 +122,7 @@ extension DatabaseManager {
                                 "email":user.safeMail
                             ]
                         ]
-                        self.database.child("users").setValue(newCollection,withCompletionBlock: { error, _ in
+                        strongSelf.database.child("users").setValue(newCollection,withCompletionBlock: { error, _ in
                             guard error == nil else {
                                 completion(false)
                                 return
@@ -384,14 +388,14 @@ extension DatabaseManager {
                       let messageID = dictionary["id"] as? String,
                       let content = dictionary["content"] as? String,
                       let senderEmail = dictionary["sender_email"] as? String,
-                      let type = dictionary["type"],
+                      let type = dictionary["type"] as? String,
                       let dateString = dictionary["date"] as? String,
                       let date = ChatViewController.dateFormatter.date(from: dateString) else {
                           return nil
                       }
                         
                     var kind: MessageKind?
-                    if type as? String == "photo" {
+                    if type == "photo" {
                         //photo
                         guard let imageUrl = URL(string: content),
                         let placeHolder = UIImage(systemName: "plus") else {
@@ -403,7 +407,7 @@ extension DatabaseManager {
                                           size: CGSize(width: 300, height: 300))
                         kind = .photo(media)
                     }
-                    else  if type as? String == "video" {
+                    else if type == "video" {
                         //photo
                         guard let videoUrl = URL(string: content),
                         let placeHolder = UIImage(named: "video_placeholder") else {
@@ -415,7 +419,7 @@ extension DatabaseManager {
                                           size: CGSize(width: 300, height: 300))
                         kind = .video(media)
                         
-                    } else if type as! String == "location" {
+                    } else if type == "location" {
                         let locationComponents = content.components(separatedBy: ",")
                         guard let longitude = Double(locationComponents[0]),
                             let latitude = Double(locationComponents[1]) else {
