@@ -53,7 +53,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Chats" id="I4T-AA-tZ0"/>
+                    <navigationItem key="navigationItem" title="Chats" largeTitleDisplayMode="never" id="I4T-AA-tZ0"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

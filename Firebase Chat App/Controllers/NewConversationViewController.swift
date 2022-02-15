@@ -12,6 +12,7 @@ class NewConversationViewController: UIViewController {
     private let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search for users...."
+        searchBar.backgroundColor = .black
         return searchBar
     }()
     
@@ -169,7 +170,7 @@ extension NewConversationViewController:UITableViewDelegate,UITableViewDataSourc
          
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 100
     }
 }
 
