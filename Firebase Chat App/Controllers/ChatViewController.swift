@@ -633,7 +633,7 @@ extension ChatViewController: MessageCellDelegate {
            case .location(let locationData):
                let coordinates = locationData.location.coordinate
                let vc = LocationPickerViewController(coordinates: coordinates)
-               
+               vc.isPickable = false
                vc.title = "Location"
                navigationController?.pushViewController(vc, animated: true)
            default:

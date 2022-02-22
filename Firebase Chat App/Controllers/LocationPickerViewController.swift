@@ -9,15 +9,20 @@ import UIKit
 import CoreLocation
 import MapKit
 
-final class LocationPickerViewController: UIViewController {
+protocol HandleMapSearch : AnyObject {
+    func dropPinZoomIn(placemark:MKPlacemark)
+}
 
+final class LocationPickerViewController: UIViewController {
+    
     public var completion: ((CLLocationCoordinate2D) -> Void)?
     private var coordinates: CLLocationCoordinate2D?
-    private var isPickable = true
+    public var isPickable = true
     private let map: MKMapView = {
         let map = MKMapView()
         return map
     }()
+    var resultSearchController:UISearchController? = nil
 
     init(coordinates: CLLocationCoordinate2D?) {
         self.coordinates = coordinates
@@ -32,6 +37,9 @@ final class LocationPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         if isPickable {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send",
                                                                 style: .done,
@@ -43,6 +51,7 @@ final class LocationPickerViewController: UIViewController {
             gesture.numberOfTouchesRequired = 1
             gesture.numberOfTapsRequired = 1
             map.addGestureRecognizer(gesture)
+            setupLocationSearchVC()
         }
         else {
             // just showing location
@@ -54,6 +63,9 @@ final class LocationPickerViewController: UIViewController {
             let pin = MKPointAnnotation()
             pin.coordinate = coordinates
             map.addAnnotation(pin)
+            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+            let region = MKCoordinateRegion(center: coordinates, span: span)
+            map.setRegion(region, animated: true)
         }
         view.addSubview(map)
     }
@@ -85,5 +97,40 @@ final class LocationPickerViewController: UIViewController {
         super.viewDidLayoutSubviews()
         map.frame = view.bounds
     }
+    
+    private func setupLocationSearchVC() {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let locationSearchTable = mainStoryboard.instantiateViewController(withIdentifier: "LocationSearchTable") as! LocationSearchTable
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController?.searchResultsUpdater = locationSearchTable
+        let searchBar = resultSearchController!.searchBar
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search for places"
+        navigationItem.titleView = resultSearchController?.searchBar
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        resultSearchController?.obscuresBackgroundDuringPresentation = true
+        definesPresentationContext = true
+        locationSearchTable.mapView = map
+        locationSearchTable.handleMapSearchDelegate = self
+    }
 
+}
+
+extension LocationPickerViewController : HandleMapSearch {
+    
+    func dropPinZoomIn(placemark: MKPlacemark) {
+        coordinates = placemark.coordinate
+        map.removeAnnotations(map.annotations)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemark.coordinate
+        annotation.title = placemark.name
+        if let city = placemark.locality, let state = placemark.administrativeArea {
+            annotation.subtitle = "\(city) \(state)"
+        }
+        map.addAnnotation(annotation)
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
+        map.setRegion(region, animated: true)
+    }
+    
 }
