@@ -12,6 +12,7 @@ import SDWebImage
 import AVFoundation
 import AVKit
 import CoreLocation
+import MapKit
 
 struct Message:MessageType {
     public var sender: SenderType
@@ -631,11 +632,12 @@ extension ChatViewController: MessageCellDelegate {
 
            switch message.kind {
            case .location(let locationData):
-               let coordinates = locationData.location.coordinate
-               let vc = LocationPickerViewController(coordinates: coordinates)
-               vc.isPickable = false
-               vc.title = "Location"
-               navigationController?.pushViewController(vc, animated: true)
+               locationTapActionSheet(location: locationData.location)
+//               let coordinates = locationData.location.coordinate
+//               let vc = LocationPickerViewController(coordinates: coordinates)
+//               vc.isPickable = false
+//               vc.title = "Location"
+//               navigationController?.pushViewController(vc, animated: true)
            default:
                break
            }
@@ -666,3 +668,72 @@ extension ChatViewController: MessageCellDelegate {
     }
 }
 
+extension ChatViewController {
+    
+    private func locationTapActionSheet(location: CLLocation) {
+        let optionMenu = UIAlertController(title: nil, message: "Choose Map Option", preferredStyle: .actionSheet)
+        
+        let appleMaps = UIAlertAction(title: "Apple Maps", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openAppleMaps(location: location)
+        })
+        
+        let googleMaps = UIAlertAction(title: "Google Maps", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openGoogleMaps(location: location)
+        })
+        
+        let wazeMaps = UIAlertAction(title: "Waze", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.openWazeMaps(location: location)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+        })
+        optionMenu.addAction(appleMaps)
+        optionMenu.addAction(googleMaps)
+        optionMenu.addAction(wazeMaps)
+        optionMenu.addAction(cancelAction)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+    
+    private func openAppleMaps(location: CLLocation) {
+        let latitude: CLLocationDegrees = location.coordinate.latitude
+        let longitude: CLLocationDegrees = location.coordinate.longitude
+        let regionDistance:CLLocationDistance = 10000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegion(center: coordinates, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "Shared Location"
+        mapItem.openInMaps(launchOptions: options)
+    }
+        
+    private func openGoogleMaps(location: CLLocation) {
+        let destination = "\(location.coordinate.latitude)" + "," + "\(location.coordinate.longitude)"
+        if (UIApplication.shared.canOpenURL(NSURL(string:"comgooglemaps://")! as URL)) {
+            UIApplication.shared.open(NSURL(string:
+                                                            "comgooglemaps://?saddr=&daddr=\(location.coordinate.latitude),\(location.coordinate.longitude)&directionsmode=driving")! as URL)
+        } else {
+            let urlStr = "https://www.google.com/maps/search/?api=1&query=" + destination
+            UIApplication.shared.open(URL(string: urlStr)!)
+        }
+    }
+    
+    private func openWazeMaps(location: CLLocation) {
+        let destination = "\(location.coordinate.latitude)" + "," + "\(location.coordinate.longitude)"
+        if UIApplication.shared.canOpenURL(URL(string: "waze://")!) {
+            let urlStr = String(format: "waze://?ll=%f,%f&navigate=yes", location.coordinate.latitude, location.coordinate.longitude)
+            UIApplication.shared.open(URL(string: urlStr)!)
+        } else {
+            let urlStr = "https://waze.com/ul?ll=" + destination + "&navigate=yes&z=10"
+            UIApplication.shared.open(URL(string: urlStr)!)
+        }
+    }
+}

@@ -59,6 +59,12 @@
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
 	</array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>comgooglemaps</string>
+        <string>comgooglemaps-x-callback</string>
+        <string>waze</string>
+    </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
