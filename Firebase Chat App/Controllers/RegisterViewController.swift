@@ -42,7 +42,7 @@ class RegisterViewController: UIViewController {
         firstNameField.translatesAutoresizingMaskIntoConstraints = false
         firstNameField.autocapitalizationType = .none
         firstNameField.attributedPlaceholder = NSAttributedString(
-            string: "Type Your First Name",
+            string: "Ingrese Nombre",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         firstNameField.layer.cornerRadius = 10
@@ -63,7 +63,7 @@ class RegisterViewController: UIViewController {
         lasttNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         lasttNameField.autocapitalizationType = .none
         lasttNameField.attributedPlaceholder = NSAttributedString(
-            string: "Type Your Last Name",
+            string: "Ingrese Apellido",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         lasttNameField.layer.cornerRadius = 10
@@ -88,7 +88,7 @@ class RegisterViewController: UIViewController {
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
         mailTextField.attributedPlaceholder = NSAttributedString(
-            string: "Type your email",
+            string: "Ingresar Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         mailTextField.layer.cornerRadius = 10
@@ -110,7 +110,7 @@ class RegisterViewController: UIViewController {
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
         passwordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Type Your password",
+            string: "Ingresar Contraseña",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         passwordTextField.layer.cornerRadius = 10
@@ -134,7 +134,7 @@ class RegisterViewController: UIViewController {
     //MARK: loginButton
     private let loginButton: UIButton = {
         let loginButton = UIButton()
-        loginButton.setTitle("Register", for: .normal)
+        loginButton.setTitle("Registrar", for: .normal)
         loginButton.setTitleColor(.black, for: .normal)
         loginButton.backgroundColor = .link
         loginButton.layer.cornerRadius = 10
@@ -203,7 +203,7 @@ class RegisterViewController: UIViewController {
             
             guard !exists else {
                 //user already exists
-                strongSelf.alertUserLoginError(message: "Looks like user account for thath email addres already exists")
+                strongSelf.alertUserLoginError(message: "Parece que esta cuenta ya existe en nuestros registros")
                 return
             }
             
@@ -218,7 +218,7 @@ class RegisterViewController: UIViewController {
                 }
                 guard authResult != nil, error == nil else {
                     let alert = UIAlertController(title: "Woops",
-                                                  message: "Error creating account",
+                                                  message: "Error creando cuenta",
                                                   preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Dismiss",
                                                   style: .cancel,
@@ -260,11 +260,11 @@ class RegisterViewController: UIViewController {
 
     }
     //MARK:- alertUserLoginError
-    func alertUserLoginError(message:String = "Please enter all information to create new account"){
+    func alertUserLoginError(message:String = "Por favor de ingresar toda la información para crear una neuva cuenta"){
         let alert = UIAlertController(title: "Woops",
                                       message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss",
+        alert.addAction(UIAlertAction(title: "Ok",
                                       style: .cancel,
                                       handler: nil))
         present(alert, animated: true)
@@ -371,18 +371,18 @@ extension RegisterViewController : UITextFieldDelegate {
 extension RegisterViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     func presentPhotoActionSheet(){
-        let actionSheet = UIAlertController(title: "Profile Picture", message: "Would you like to select a picture", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Imagen de perfil", message: "¿ Le gustaria seleccionar una foto ?", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Cancel",
                                             style: .cancel,
                                             handler: nil))
         
-        actionSheet.addAction(UIAlertAction(title: "Take Photo",
+        actionSheet.addAction(UIAlertAction(title: "Tomar una foto",
                                             style: .default,
                                             handler: { [weak self] _ in
                                                 self?.presentCamera()
                                             }))
         
-        actionSheet.addAction(UIAlertAction(title: "Choose Photo",
+        actionSheet.addAction(UIAlertAction(title: "Elegir una imagen",
                                             style: .default,
                                             handler: { [weak self] _ in
                                                 self?.presentPhotoPicker()

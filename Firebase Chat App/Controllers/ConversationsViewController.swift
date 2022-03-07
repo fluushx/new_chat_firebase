@@ -41,7 +41,7 @@ class ConversationsViewController: UIViewController {
     
     private let noConversation : UILabel = {
         let noConversation = UILabel()
-        noConversation.text = "No Conversations"
+        noConversation.text = "Sin conversaciones"
         noConversation.textAlignment = .center
         noConversation.font = .systemFont(ofSize:21,weight: .medium)
         noConversation.isHidden = true

@@ -138,12 +138,12 @@ class ChatViewController: MessagesViewController {
      
     private func presentInputActionSheet(){
         let actionSheet = UIAlertController(
-            title: "Attach Media",
-            message: "What would you like attache?",
+            title: "Envio de datos",
+            message: "¿Que quieres enviar?",
             preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(
-            title: "Photo",
+            title: "Foto",
             style: .default,
             handler: { [weak self] _ in
                 self?.presentPhotoInputActionSheet()
@@ -157,23 +157,23 @@ class ChatViewController: MessagesViewController {
                 self?.presentVideoInputActionSheet()
             }))
         
-        actionSheet.addAction(UIAlertAction(
-            title: "Audio",
-            style: .default,
-            handler: { [weak self] _ in
-                
-                
-            }))
+//        actionSheet.addAction(UIAlertAction(
+//            title: "Audio",
+//            style: .default,
+//            handler: { [weak self] _ in
+//
+//
+//            }))
         
         actionSheet.addAction(UIAlertAction(
-            title: "Location",
+            title: "Ubicación",
             style: .default,
             handler: { [weak self] _ in
                 self?.presentLocationPicker()
                 
             }))
         actionSheet.addAction(UIAlertAction(
-            title: "Cancel",
+            title: "Cancelar",
             style: .cancel,
             handler: nil))
         
@@ -226,12 +226,12 @@ class ChatViewController: MessagesViewController {
     private func presentPhotoInputActionSheet(){
         
         let actionSheet = UIAlertController(
-            title: "Attach Photo",
-            message: "Where would you like to attach photo from",
+            title: "Compartir Foto/Camara",
+            message: "Desde donde quiere adjuntar su archivo",
             preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(
-            title: "Camera",
+            title: "Camara",
             style: .default,
             handler: { [weak self] _ in
                 
@@ -244,7 +244,7 @@ class ChatViewController: MessagesViewController {
             }))
         
         actionSheet.addAction(UIAlertAction(
-            title: "Photo Library",
+            title: "Galeria de fotos",
             style: .default,
             handler: { [weak self] _ in
                 
@@ -257,7 +257,7 @@ class ChatViewController: MessagesViewController {
             }))
         
         actionSheet.addAction(UIAlertAction(
-            title: "Cancel",
+            title: "Cancelar",
             style: .cancel,
             handler: nil
             ))
@@ -269,12 +269,12 @@ class ChatViewController: MessagesViewController {
     private func presentVideoInputActionSheet(){
         
         let actionSheet = UIAlertController(
-            title: "Attach Video",
-            message: "Where would you like to attach video from",
+            title: "Compartir video",
+            message: "Desde donde quiere adjuntar su video",
             preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(
-            title: "Camera",
+            title: "Camara",
             style: .default,
             handler: { [weak self] _ in
                 
@@ -289,7 +289,7 @@ class ChatViewController: MessagesViewController {
             }))
         
         actionSheet.addAction(UIAlertAction(
-            title: "Video Library",
+            title: "Galeria de videos",
             style: .default,
             handler: { [weak self] _ in
                 
@@ -304,7 +304,7 @@ class ChatViewController: MessagesViewController {
             }))
         
         actionSheet.addAction(UIAlertAction(
-            title: "Cancel",
+            title: "Cancelar",
             style: .cancel,
             handler: nil
             ))
@@ -671,7 +671,7 @@ extension ChatViewController: MessageCellDelegate {
 extension ChatViewController {
     
     private func locationTapActionSheet(location: CLLocation) {
-        let optionMenu = UIAlertController(title: nil, message: "Choose Map Option", preferredStyle: .actionSheet)
+        let optionMenu = UIAlertController(title: nil, message: "Eliga una opción", preferredStyle: .actionSheet)
         
         let appleMaps = UIAlertAction(title: "Apple Maps", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
@@ -688,7 +688,7 @@ extension ChatViewController {
             self.openWazeMaps(location: location)
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+        let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             
         })

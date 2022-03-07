@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Profile-->
+        <!--Perfil-->
         <scene sceneID="cxu-zg-mei">
             <objects>
                 <navigationController id="H9b-Rc-ynM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="person.circle" catalog="system" id="RfU-at-xbz"/>
+                    <tabBarItem key="tabBarItem" title="Perfil" image="person.circle" catalog="system" id="RfU-at-xbz"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="eVn-6N-Bvw">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -27,7 +27,7 @@
             </objects>
             <point key="canvasLocation" x="-646" y="956"/>
         </scene>
-        <!--Profile-->
+        <!--Perfil-->
         <scene sceneID="GfB-7M-9EX">
             <objects>
                 <viewController id="fZw-t8-OB2" customClass="ProfileViewController" customModule="Firebase_Chat_App" customModuleProvider="target" sceneMemberID="viewController">
@@ -37,7 +37,7 @@
                         <viewLayoutGuide key="safeArea" id="dL6-7t-ffV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="8iY-KW-IP5"/>
+                    <navigationItem key="navigationItem" title="Perfil" id="8iY-KW-IP5"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3VI-1m-6Lo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

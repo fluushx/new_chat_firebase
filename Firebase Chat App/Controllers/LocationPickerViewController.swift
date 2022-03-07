@@ -41,7 +41,7 @@ final class LocationPickerViewController: UIViewController {
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         if isPickable {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Send",
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Enviar",
                                                                 style: .done,
                                                                 target: self,
                                                                 action: #selector(sendButtonTapped))
@@ -105,7 +105,7 @@ final class LocationPickerViewController: UIViewController {
         resultSearchController?.searchResultsUpdater = locationSearchTable
         let searchBar = resultSearchController!.searchBar
         searchBar.sizeToFit()
-        searchBar.placeholder = "Search for places"
+        searchBar.placeholder = "Buscar Ubicación"
         navigationItem.titleView = resultSearchController?.searchBar
         resultSearchController?.hidesNavigationBarDuringPresentation = false
         resultSearchController?.obscuresBackgroundDuringPresentation = true

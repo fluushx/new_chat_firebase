@@ -38,7 +38,7 @@ class LoginViewController: UIViewController {
         mailTextField.translatesAutoresizingMaskIntoConstraints = false
         mailTextField.autocapitalizationType = .none
         mailTextField.attributedPlaceholder = NSAttributedString(
-            string: "Type Your Mail",
+            string: "Ingrese Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         mailTextField.layer.cornerRadius = 10
@@ -61,7 +61,7 @@ class LoginViewController: UIViewController {
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.autocapitalizationType = .none
         passwordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Type Your Password",
+            string: "Ingrese Contraseña",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.white]
         )
         passwordTextField.layer.cornerRadius = 10
@@ -82,7 +82,7 @@ class LoginViewController: UIViewController {
     //MARK: loginButton
     private let loginButton: UIButton = {
         let loginButton = UIButton()
-        loginButton.setTitle("Login", for: .normal)
+        loginButton.setTitle("Entrar", for: .normal)
         loginButton.layer.cornerRadius = 10
         loginButton.layer.masksToBounds = true
         loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -332,9 +332,9 @@ class LoginViewController: UIViewController {
             }
             guard let result = authResult, error == nil else {
                 let alert = UIAlertController(title: "Woops",
-                                              message: "Incorrect Password o Email",
+                                              message: "Contraseña incorrecta o Email",
                                               preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss",
+                alert.addAction(UIAlertAction(title: "Ok",
                                               style: .cancel,
                                               handler: nil))
                 self!.present(alert, animated: true)
@@ -372,11 +372,11 @@ class LoginViewController: UIViewController {
     }
     
   
-    func alertUserLoginError(message:String = "Please enter information to log in"){
+    func alertUserLoginError(message:String = "Por favor ingresar información para iniciar sesión"){
         let alert = UIAlertController(title: "Woops",
                                       message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss",
+        alert.addAction(UIAlertAction(title: "Ok",
                                       style: .cancel,
                                       handler: nil))
         present(alert, animated: true)
@@ -384,7 +384,7 @@ class LoginViewController: UIViewController {
     }
     
     func setUpRightBarButton (){
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Registrar",
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapRegisterButton))

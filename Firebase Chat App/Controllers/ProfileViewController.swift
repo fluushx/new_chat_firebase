@@ -36,22 +36,22 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         view.addSubview(tableView)
         tableView.backgroundColor = .lightGray
         data.append(ProfileViewModel(viewModelType: .info,
-                                             title: "Name: \(UserDefaults.standard.value(forKey:"name") as? String ?? "No Name")",
+                                             title: "Nombre: \(UserDefaults.standard.value(forKey:"name") as? String ?? "No Name")",
                                              handler: nil))
         data.append(ProfileViewModel(viewModelType: .info,
                                              title: "Email: \(UserDefaults.standard.value(forKey:"email") as? String ?? "No Email")",
                                              handler: nil))
         data.append(ProfileViewModel(viewModelType: .logout,
-                                             title: "Log Out",
+                                             title: "Salir",
                                              handler: { [weak self] in
             
             guard let strongSelf = self else {
                 return
             }
-            let actionSheet = UIAlertController(title: "Are you sure?",
-                                          message: "Log out",
+            let actionSheet = UIAlertController(title: "¿Estas seguro?",
+                                          message: "Salir",
                                           preferredStyle: .alert)
-            actionSheet.addAction(UIAlertAction(title: "Log Out",
+            actionSheet.addAction(UIAlertAction(title: "Salir",
                                           style: .destructive,
                                           handler: { [weak self] _ in
                                             guard let strongSelf = self else {
@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                             }
                                             
                                           }))
-            actionSheet.addAction(UIAlertAction(title: "Cancel",
+            actionSheet.addAction(UIAlertAction(title: "Cancelar",
                                                 style: .cancel,
                                                 handler: nil))
             strongSelf.present(actionSheet, animated: true)

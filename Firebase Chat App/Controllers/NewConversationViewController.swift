@@ -11,8 +11,8 @@ class NewConversationViewController: UIViewController {
     
     private let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Search for users...."
-        searchBar.backgroundColor = .black
+        searchBar.placeholder = "Buscar otros usuarios"
+//        searchBar.backgroundColor = .black
         return searchBar
     }()
     
@@ -26,7 +26,7 @@ class NewConversationViewController: UIViewController {
     private let noResultsLabel : UILabel = {
        let noResultsLabel = UILabel()
         noResultsLabel.isHidden = true
-        noResultsLabel.text = "No Results"
+        noResultsLabel.text = "Sin resultados"
         noResultsLabel.textAlignment = .center
         noResultsLabel.font = .systemFont(ofSize: 21,weight: .medium)
          
@@ -46,7 +46,7 @@ class NewConversationViewController: UIViewController {
         view.backgroundColor = .systemBackground
         searchBar.delegate = self
         navigationController?.navigationBar.topItem?.titleView = searchBar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancelar",
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(dismissSelf))
