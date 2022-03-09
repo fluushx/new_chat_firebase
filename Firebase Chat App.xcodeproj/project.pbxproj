@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		08457BBD27A16C2E00BF89E4 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08457BBC27A16C2E00BF89E4 /* CommonFunctions.swift */; };
+		088D17E827D94C16007CCFD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 088D17E727D94C16007CCFD3 /* GoogleService-Info.plist */; };
 		08D706D427C5828B00786C44 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D706D327C5828B00786C44 /* LocationSearchTable.swift */; };
 		872E03F7275A84B500110E38 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */; };
-		8731E11726E705F80011E4E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8731E11626E705F80011E4E0 /* GoogleService-Info.plist */; };
 		8799757726E682950069C9F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799757626E682950069C9F1 /* AppDelegate.swift */; };
 		8799757926E682950069C9F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799757826E682950069C9F1 /* SceneDelegate.swift */; };
 		8799757B26E682950069C9F1 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799757A26E682950069C9F1 /* ConversationsViewController.swift */; };
@@ -34,11 +34,11 @@
 
 /* Begin PBXFileReference section */
 		08457BBC27A16C2E00BF89E4 /* CommonFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
+		088D17E727D94C16007CCFD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D706D327C5828B00786C44 /* LocationSearchTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		111F522449D78F37B9DB8192 /* Pods-Firebase Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.release.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.release.xcconfig"; sourceTree = "<group>"; };
 		5885BC43CF86A8A1600058C6 /* Pods_Firebase_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Firebase_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
-		8731E11626E705F80011E4E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8799757326E682950069C9F1 /* Firebase Chat App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Firebase Chat App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8799757626E682950069C9F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8799757826E682950069C9F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		8799757526E682950069C9F1 /* Firebase Chat App */ = {
 			isa = PBXGroup;
 			children = (
-				8731E11626E705F80011E4E0 /* GoogleService-Info.plist */,
+				088D17E727D94C16007CCFD3 /* GoogleService-Info.plist */,
 				8799758F26E683FA0069C9F1 /* Resources */,
 				8799758E26E683F40069C9F1 /* ViewModels */,
 				8799758C26E683D10069C9F1 /* Views */,
@@ -256,7 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8799758326E682960069C9F1 /* LaunchScreen.storyboard in Resources */,
-				8731E11726E705F80011E4E0 /* GoogleService-Info.plist in Resources */,
+				088D17E827D94C16007CCFD3 /* GoogleService-Info.plist in Resources */,
 				8799758026E682960069C9F1 /* Assets.xcassets in Resources */,
 				8799757E26E682950069C9F1 /* Main.storyboard in Resources */,
 			);
@@ -507,9 +507,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fz.Firebase-Chat-App";
+				PRODUCT_BUNDLE_IDENTIFIER = empire.chat.vlad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Firebase_chat_app_Adhoc;
+				PROVISIONING_PROFILE_SPECIFIER = Empire_Chat_Adhoc;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -530,9 +530,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.fz.Firebase-Chat-App";
+				PRODUCT_BUNDLE_IDENTIFIER = empire.chat.vlad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Firebase_chat_app_Adhoc;
+				PROVISIONING_PROFILE_SPECIFIER = Empire_Chat_Adhoc;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

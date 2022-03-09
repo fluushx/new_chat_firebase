@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>615508120088-b20etkckkp7above483ajrj854eo629i.apps.googleusercontent.com</string>
+	<string>518708222741-of2bh9djm20cnvbcbli8a55tke2vdvfm.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.615508120088-b20etkckkp7above483ajrj854eo629i</string>
+	<string>com.googleusercontent.apps.518708222741-of2bh9djm20cnvbcbli8a55tke2vdvfm</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCUXd-uzB9XHtZcb3FAzIsaeRpCiSQdHTs</string>
+	<string>AIzaSyCiLUeiPE-gafRB_K4FfMp8YFgBccKapio</string>
 	<key>GCM_SENDER_ID</key>
-	<string>615508120088</string>
+	<string>518708222741</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.fz.Firebase-Chat-App</string>
+	<string>empire.chat.vlad</string>
 	<key>PROJECT_ID</key>
-	<string>messenger-firebase-694bb</string>
+	<string>chat-app-9b901</string>
 	<key>STORAGE_BUCKET</key>
-	<string>messenger-firebase-694bb.appspot.com</string>
+	<string>chat-app-9b901.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:615508120088:ios:d0355fc75f9e45ed6c696d</string>
+	<string>1:518708222741:ios:5e845ff7bd7051b9eca71c</string>
 </dict>
 </plist>
