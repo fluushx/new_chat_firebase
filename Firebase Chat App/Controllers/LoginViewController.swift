@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0.8
-        imageView.image = UIImage(named: "anonymus")
+        imageView.image = UIImage(named: "pngegg")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()

@@ -16,7 +16,7 @@ class RegisterViewController: UIViewController {
         let logoImageView = UIImageView()
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(named: "initial_image_profile")
+        logoImageView.image = UIImage(named: "lee-sin")
         logoImageView.tintColor = .gray
         return logoImageView
     }()
@@ -30,7 +30,7 @@ class RegisterViewController: UIViewController {
     let bgImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "crop")
+        imageView.image = UIImage(named: "project-vayne-league-of-legends-3126")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
