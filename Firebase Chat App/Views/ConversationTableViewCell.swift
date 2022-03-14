@@ -34,7 +34,7 @@ class ConversationTableViewCell: UITableViewCell {
     private let userNameLabel: UILabel = {
        let label = UILabel()
 //        label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = .black
         label.font = .systemFont(ofSize:21,weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -43,7 +43,7 @@ class ConversationTableViewCell: UITableViewCell {
     private let userMessageLabel: UILabel = {
        let label = UILabel()
 //        label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = .black
         label.font = .systemFont(ofSize:19,weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0

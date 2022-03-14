@@ -56,12 +56,12 @@ class ConversationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        view.backgroundColor = .black
+//        view.backgroundColor = .black
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-        tableView.backgroundColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose,
+//        tableView.backgroundColor = .black
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
                                                             target: self,
                                                             action: #selector(didTapComposeButton))
         startListeningForConversations()
@@ -226,12 +226,13 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         cell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0)
         let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: cell.frame.width, height: cell.frame.height))
         
-        let image = UIImage(named: "hackerBackground")
-        imageView.image = image
+//        let image = UIImage(named: "lcu-beta-update-2-banner")
+//        imageView.image = image
         imageView.layer.cornerRadius = 10
+//        imageView.contentMode = .scaleAspectFill
         cell.backgroundView = UIView()
         cell.backgroundView!.addSubview(imageView)
-        cell.backgroundColor = .black
+//        cell.backgroundColor = .black
         cell.configure(with: model)
         return cell
     }
