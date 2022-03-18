@@ -28,6 +28,9 @@ PODS:
   - Firebase/Database (8.9.1):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 8.9.0)
+  - Firebase/Messaging (8.9.1):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 8.9.0)
   - Firebase/Storage (8.9.1):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.9.0)
@@ -78,6 +81,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.6)
     - GoogleUtilities/UserDefaults (~> 7.6)
     - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseMessaging (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Reachability (~> 7.6)
+    - GoogleUtilities/UserDefaults (~> 7.6)
+    - nanopb (~> 2.30908.0)
   - FirebaseStorage (8.9.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
@@ -161,6 +173,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Crashlytics
   - Firebase/Database
+  - Firebase/Messaging
   - Firebase/Storage
   - GoogleSignIn
   - JGProgressHUD
@@ -183,6 +196,7 @@ SPEC REPOS:
     - FirebaseCrashlytics
     - FirebaseDatabase
     - FirebaseInstallations
+    - FirebaseMessaging
     - FirebaseStorage
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -214,6 +228,7 @@ SPEC CHECKSUMS:
   FirebaseCrashlytics: 40efbd81157dae307ec95612fa1328347284d2c2
   FirebaseDatabase: 2236b804cf0cac165b4620669bedf7ee643a2bcc
   FirebaseInstallations: caa7c8e0d3e2345b8829d2fa9ca1b4dfbf2fcc85
+  FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
   FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
@@ -231,6 +246,6 @@ SPEC CHECKSUMS:
   RealmSwift: 9b02d25acb46a14756bde9893abb99e2e3675923
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
 
-PODFILE CHECKSUM: 3a927f8e9a7e06ed0982d86b24171d97ce7df0b7
+PODFILE CHECKSUM: fdc3e7102815caca18e739e288532e6327b985fa
 
 COCOAPODS: 1.11.2

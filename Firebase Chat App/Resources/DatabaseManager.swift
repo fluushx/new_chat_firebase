@@ -29,6 +29,7 @@ struct ChatAppUser {
     let firstName:String
     let lastName: String
     let mail: String
+    let deviceToken: String
      var safeMail:String{
         var safeMail = mail.replacingOccurrences(of: ".", with: "-")
         safeMail = safeMail.replacingOccurrences(of: "@", with: "-")
@@ -85,7 +86,8 @@ extension DatabaseManager {
     public func insertUser(with user:ChatAppUser, completion: @escaping(Bool)->Void){
         database.child(user.safeMail).setValue([
             "first_name": user.firstName,
-            "last_name": user.lastName
+            "last_name": user.lastName,
+            "deviceToken": user.deviceToken
             
         ],withCompletionBlock: { [weak self] error, _ in
             
@@ -102,7 +104,8 @@ extension DatabaseManager {
                     //append  to user dictionary
                         let newElement = [
                                 "name":user.firstName + " " + user.lastName,
-                                "email":user.safeMail
+                                "email":user.safeMail,
+                                "deviceToken": user.deviceToken
                             ]
                         
                         usersColecction.append(newElement)
@@ -119,7 +122,8 @@ extension DatabaseManager {
                         let newCollection : [[String:String]] = [
                             [
                                 "name":user.firstName + " " + user.lastName,
-                                "email":user.safeMail
+                                "email":user.safeMail,
+                                "deviceToken": user.deviceToken
                             ]
                         ]
                         strongSelf.database.child("users").setValue(newCollection,withCompletionBlock: { error, _ in
@@ -134,6 +138,22 @@ extension DatabaseManager {
              
         })
     }
+    
+    public func updateDeviceToken(email: String, deviceToken: String){
+        database.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            if let usersColecction = snapshot.value as? [[String:String]] {
+                for (indexOf,currentUser) in usersColecction.enumerated() {
+                    if let currentUserMail = currentUser["email"] {
+                        if currentUserMail == DatabaseManager.safeEmail(emailAddress: email) {
+                            self.database.child("users").child("\(indexOf)").child("deviceToken").setValue(deviceToken)
+                            break
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
     public func getAllUsers (completion: @escaping (Result<[[String:String]],Error>)->Void){
         database.child("users").observeSingleEvent(of: .value, with: { snapshot in
             guard let value = snapshot.value as? [[String:String]] else {

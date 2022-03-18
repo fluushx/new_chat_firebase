@@ -9,6 +9,8 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 import simd
+import FirebaseMessaging
+
 
 struct Conversation {
     let id:String
@@ -97,11 +99,19 @@ class ConversationsViewController: UIViewController {
     
     private func validateAuth(){
       
-        if FirebaseAuth.Auth.auth().currentUser == nil {
+        guard let currentUser = FirebaseAuth.Auth.auth().currentUser else {
             let vc = LoginViewController()
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             present(nav, animated: false)
+            return
+        }
+        
+        Messaging.messaging().token { token, error in
+          if let token = token {
+              print("FCM registration token: \(token)")
+              DatabaseManager.shared.updateDeviceToken(email: currentUser.email ?? "N/A", deviceToken: token)
+          }
         }
     }
     

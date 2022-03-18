@@ -12,6 +12,7 @@ import GoogleSignIn
 import Firebase
 import JGProgressHUD
 import CryptoKit
+import FirebaseMessaging
 
 class LoginViewController: UIViewController {
     
@@ -256,41 +257,19 @@ class LoginViewController: UIViewController {
 
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
-                    let chatUser = ChatAppUser(firstName: firstName,
-                                               lastName: lastName,
-                                               mail: email)
-                    DatabaseManager.shared.insertUser(with: chatUser,completion: { success in
-                        if success {
-                            if user.profile?.hasImage != nil{
-                                guard let url = user.profile?.imageURL(withDimension: 200) else {
-                                    return
-                                }
-                                URLSession.shared.dataTask(with: url, completionHandler: { data,_,_ in
-                                    guard let data = data else {
-                                        return
-                                    }
-                                    let fileName = chatUser.profilePictureFileName
-                                    storageManager.shared.uploadProfilePicture(with: data,
-                                                                               fileName: fileName,
-                                                                               completion: { results in
-                                                                                
-                                                                                switch results {
-                                                                                case .success(let downloadURL):
-                                                                                    UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
-                                                                                    print(downloadURL)
-                                                                                case .failure(let error):
-                                                                                    print("storage manager error: \(error)")
-                                                                                }
-                                                                                
-                                                                               })
-                                }).resume()
-                                
-                            }
-                            
-                        
+                    
+                    Messaging.messaging().token { token, error in
+                        if let error = error {
+                            print("Error fetching FCM registration token: \(error)")
+                            let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: email, deviceToken: "deviceToken")
+                            self.insertUserDetail(user: user, chatUser: chatUser)
+                        } else if let token = token {
+                            print("FCM registration token: \(token)")
+                            let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: email, deviceToken: token)
+                            self.insertUserDetail(user: user, chatUser: chatUser)
                         }
-                        
-                    })
+                    }
+                    
                 }
                 
             })
@@ -569,48 +548,21 @@ extension LoginViewController: LoginButtonDelegate{
             UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
             DatabaseManager.shared.userExists(with: userMail, completion:{ exits in
                 if !exits {
-                    let chatUser = ChatAppUser(firstName: firstName,
-                                               lastName: lastName,
-                                               mail: userMail)
-                    DatabaseManager.shared.insertUser(with: chatUser,completion: { succes in
-                        if succes{
-                            
-                            guard let url = URL(string: pictureUrl) else {
-                                print("Error to get URL from facebok")
-                                return
-                            }
-                            print("Download data from facebook image")
-                            URLSession.shared.dataTask(with: url, completionHandler: { data, _ , _ in
-                                guard let data = data else {
-                                    print("Failed to get data from facebook")
-                                    return
-                                }
-                                print("got data from facebook, uploading ")
-                                let fileName = chatUser.profilePictureFileName
-                                storageManager.shared.uploadProfilePicture(with: data,
-                                                                           fileName: fileName,
-                                                                           completion: { results in
-                                                                            
-                                                                            switch results {
-                                                                            case .success(let downloadURL):
-                                                                                UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
-                                                                                print(downloadURL)
-                                                                            case .failure(let error):
-                                                                                print("storage manager error: \(error)")
-                                                                            }
-                                                                            
-                                                                           })
-                            }).resume()
-                            
+                    
+                    Messaging.messaging().token { token, error in
+                        if let error = error {
+                            print("Error fetching FCM registration token: \(error)")
+                            let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: userMail, deviceToken: "deviceToken")
+                            self.insertUserDetailForFB(chatUser: chatUser, pictureUrl: pictureUrl)
+                        } else if let token = token {
+                            print("FCM registration token: \(token)")
+                            let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: userMail, deviceToken: token)
+                            self.insertUserDetailForFB(chatUser: chatUser, pictureUrl: pictureUrl)
                         }
-                        
-                    })
+                    }
                 }
-                
             })
         })
-        
-        
         
         
         let credential = FacebookAuthProvider.credential(withAccessToken: token)
@@ -627,6 +579,77 @@ extension LoginViewController: LoginButtonDelegate{
             }
             print("Successfully logged user in")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
+    }
+    
+    private func insertUserDetailForFB(chatUser: ChatAppUser, pictureUrl: String) {
+        DatabaseManager.shared.insertUser(with: chatUser,completion: { succes in
+            if succes{
+                
+                guard let url = URL(string: pictureUrl) else {
+                    print("Error to get URL from facebok")
+                    return
+                }
+                print("Download data from facebook image")
+                URLSession.shared.dataTask(with: url, completionHandler: { data, _ , _ in
+                    guard let data = data else {
+                        print("Failed to get data from facebook")
+                        return
+                    }
+                    print("got data from facebook, uploading ")
+                    let fileName = chatUser.profilePictureFileName
+                    storageManager.shared.uploadProfilePicture(with: data,
+                                                               fileName: fileName,
+                                                               completion: { results in
+                        
+                        switch results {
+                        case .success(let downloadURL):
+                            UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
+                            print(downloadURL)
+                        case .failure(let error):
+                            print("storage manager error: \(error)")
+                        }
+                        
+                    })
+                }).resume()
+                
+            }
+            
+        })
+    }
+    
+    private func insertUserDetail(user: GIDGoogleUser, chatUser: ChatAppUser) {
+        DatabaseManager.shared.insertUser(with: chatUser,completion: { success in
+            if success {
+                if user.profile?.hasImage != nil{
+                    guard let url = user.profile?.imageURL(withDimension: 200) else {
+                        return
+                    }
+                    URLSession.shared.dataTask(with: url, completionHandler: { data,_,_ in
+                        guard let data = data else {
+                            return
+                        }
+                        let fileName = chatUser.profilePictureFileName
+                        storageManager.shared.uploadProfilePicture(with: data,
+                                                                   fileName: fileName,
+                                                                   completion: { results in
+                                                                    
+                                                                    switch results {
+                                                                    case .success(let downloadURL):
+                                                                        UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
+                                                                        print(downloadURL)
+                                                                    case .failure(let error):
+                                                                        print("storage manager error: \(error)")
+                                                                    }
+                                                                    
+                                                                   })
+                    }).resume()
+                    
+                }
+                
+            
+            }
+            
         })
     }
 }

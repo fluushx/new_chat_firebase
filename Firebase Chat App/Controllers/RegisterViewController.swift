@@ -8,6 +8,9 @@
 import UIKit
 import FirebaseAuth
 import JGProgressHUD
+import Firebase
+import FirebaseMessaging
+
 class RegisterViewController: UIViewController {
 
     private let spinner = JGProgressHUD(style: .dark)
@@ -177,7 +180,6 @@ class RegisterViewController: UIViewController {
         logoImageView.addGestureRecognizer(gesture)
         
     }
-   
     //MARK:- didTapRegisterButton
 
     @objc private func didTapRegisterButton(){
@@ -228,37 +230,49 @@ class RegisterViewController: UIViewController {
                 UserDefaults.standard.set(mail, forKey: "email")
                 UserDefaults.standard.set("\(firstName) \(lasttNameField)", forKey: "name")
                 
-                let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail)
-                DatabaseManager.shared.insertUser(with: chatUser,completion: { success in
-                    if success{
-                        //upload image
-                        guard let image = strongSelf.logoImageView.image,
-                              let data = image.pngData() else {
-                            return
-                        }
-                        let fileName = chatUser.profilePictureFileName
-                        storageManager.shared.uploadProfilePicture(with: data,
-                                                                   fileName: fileName,
-                                                                   completion: { results in
-                                                                    
-                                                                    switch results {
-                                                                    case .success(let downloadURL):
-                                                                        UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
-                                                                        print(downloadURL)
-                                                                    case .failure(let error):
-                                                                        print("storage manager error: \(error)")
-                                                                    }
-                                                                    
-                                                                   })
-                    }
-                    
-                })
-                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+                Messaging.messaging().token { token, error in
+                  if let error = error {
+                      print("Error fetching FCM registration token: \(error)")
+                      let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail, deviceToken: "deviceToken")
+                      strongSelf.insertUserData(user: chatUser)
+                  } else if let token = token {
+                      print("FCM registration token: \(token)")
+                      let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail, deviceToken: token)
+                      strongSelf.insertUserData(user: chatUser)
+                  }
+                }
+                
             })
         })
         
 
     }
+    
+    private func insertUserData(user: ChatAppUser) {
+        print("NEW USER DATA -->")
+        print(user)
+        DatabaseManager.shared.insertUser(with: user,completion: { success in
+            if success{
+                //upload image
+                guard let image = self.logoImageView.image,
+                      let data = image.pngData() else {
+                    return
+                }
+                let fileName = user.profilePictureFileName
+                storageManager.shared.uploadProfilePicture(with: data, fileName: fileName, completion: { results in
+                    switch results {
+                    case .success(let downloadURL):
+                        UserDefaults.standard.setValue(downloadURL, forKey: "profile_picture_url")
+                        print(downloadURL)
+                    case .failure(let error):
+                        print("storage manager error: \(error)")
+                    }
+                })
+            }
+        })
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
     //MARK:- alertUserLoginError
     func alertUserLoginError(message:String = "Por favor de ingresar toda la información para crear una neuva cuenta"){
         let alert = UIAlertController(title: "Woops",
