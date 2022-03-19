@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeConversationsTableViewCell" rowHeight="117" id="KGk-i7-Jjw" customClass="HomeConversationsTableViewCell" customModule="Firebase_Chat_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="117"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="350" height="117"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3uy-lN-8Sz">
+                        <rect key="frame" x="10" y="18.5" width="80" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="OJR-3e-jzp"/>
+                            <constraint firstAttribute="width" secondItem="3uy-lN-8Sz" secondAttribute="height" multiplier="1:1" id="tTd-W4-coh"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jrB-ZD-S01">
+                        <rect key="frame" x="100" y="35.5" width="240" height="46"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhq-Qr-a6g">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yJf-dK-el7">
+                                <rect key="frame" x="0.0" y="25.5" width="240" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="3uy-lN-8Sz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="890-I2-To9"/>
+                    <constraint firstItem="jrB-ZD-S01" firstAttribute="leading" secondItem="3uy-lN-8Sz" secondAttribute="trailing" constant="10" id="Bze-8V-Za2"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jrB-ZD-S01" secondAttribute="bottom" constant="10" id="Zpq-8C-MhF"/>
+                    <constraint firstItem="jrB-ZD-S01" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="caE-gF-Glq"/>
+                    <constraint firstItem="3uy-lN-8Sz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hI5-nj-nrm"/>
+                    <constraint firstItem="jrB-ZD-S01" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jm1-dX-obe"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3uy-lN-8Sz" secondAttribute="bottom" constant="5" id="n1F-Dk-e4u"/>
+                    <constraint firstItem="3uy-lN-8Sz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="u9M-ER-bMH"/>
+                    <constraint firstAttribute="trailing" secondItem="jrB-ZD-S01" secondAttribute="trailing" constant="10" id="uYd-rq-CH7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="userImageView" destination="3uy-lN-8Sz" id="UaJ-cP-XKD"/>
+                <outlet property="userLastMessage" destination="yJf-dK-el7" id="Ef4-R4-BX5"/>
+                <outlet property="userName" destination="xhq-Qr-a6g" id="gEn-xT-dox"/>
+            </connections>
+            <point key="canvasLocation" x="153.62318840579712" y="79.352678571428569"/>
+        </tableViewCell>
+    </objects>
+</document>

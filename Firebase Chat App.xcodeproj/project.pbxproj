@@ -10,6 +10,8 @@
 		08457BBD27A16C2E00BF89E4 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08457BBC27A16C2E00BF89E4 /* CommonFunctions.swift */; };
 		088D17E827D94C16007CCFD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 088D17E727D94C16007CCFD3 /* GoogleService-Info.plist */; };
 		08D706D427C5828B00786C44 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D706D327C5828B00786C44 /* LocationSearchTable.swift */; };
+		08E0643E27E659E5009FB2E7 /* HomeConversationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E0643C27E659E4009FB2E7 /* HomeConversationsTableViewCell.swift */; };
+		08E0643F27E659E5009FB2E7 /* HomeConversationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E0643D27E659E5009FB2E7 /* HomeConversationsTableViewCell.xib */; };
 		872E03F7275A84B500110E38 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */; };
 		8799757726E682950069C9F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799757626E682950069C9F1 /* AppDelegate.swift */; };
 		8799757926E682950069C9F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8799757826E682950069C9F1 /* SceneDelegate.swift */; };
@@ -37,6 +39,8 @@
 		088D17E727D94C16007CCFD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08D706D327C5828B00786C44 /* LocationSearchTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		08E0643B27E517DE009FB2E7 /* Firebase Chat App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Firebase Chat App.entitlements"; sourceTree = "<group>"; };
+		08E0643C27E659E4009FB2E7 /* HomeConversationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeConversationsTableViewCell.swift; sourceTree = "<group>"; };
+		08E0643D27E659E5009FB2E7 /* HomeConversationsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeConversationsTableViewCell.xib; sourceTree = "<group>"; };
 		111F522449D78F37B9DB8192 /* Pods-Firebase Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Firebase Chat App.release.xcconfig"; path = "Target Support Files/Pods-Firebase Chat App/Pods-Firebase Chat App.release.xcconfig"; sourceTree = "<group>"; };
 		5885BC43CF86A8A1600058C6 /* Pods_Firebase_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Firebase_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				872E03F6275A84B500110E38 /* ConversationTableViewCell.swift */,
 				8799759026E6844A0069C9F1 /* Storyboards */,
 				8799757F26E682960069C9F1 /* Assets.xcassets */,
+				08E0643C27E659E4009FB2E7 /* HomeConversationsTableViewCell.swift */,
+				08E0643D27E659E5009FB2E7 /* HomeConversationsTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +265,7 @@
 			files = (
 				8799758326E682960069C9F1 /* LaunchScreen.storyboard in Resources */,
 				088D17E827D94C16007CCFD3 /* GoogleService-Info.plist in Resources */,
+				08E0643F27E659E5009FB2E7 /* HomeConversationsTableViewCell.xib in Resources */,
 				8799758026E682960069C9F1 /* Assets.xcassets in Resources */,
 				8799757E26E682950069C9F1 /* Main.storyboard in Resources */,
 			);
@@ -346,6 +353,7 @@
 				8799759A26E685FA0069C9F1 /* NewConversationViewController.swift in Sources */,
 				8799757B26E682950069C9F1 /* ConversationsViewController.swift in Sources */,
 				8799759826E685D40069C9F1 /* VideoPlayerViewController.swift in Sources */,
+				08E0643E27E659E5009FB2E7 /* HomeConversationsTableViewCell.swift in Sources */,
 				8799757726E682950069C9F1 /* AppDelegate.swift in Sources */,
 				872E03F7275A84B500110E38 /* ConversationTableViewCell.swift in Sources */,
 				8799759C26E6860E0069C9F1 /* ProfileViewController.swift in Sources */,

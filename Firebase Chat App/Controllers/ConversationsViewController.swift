@@ -64,6 +64,7 @@ class ConversationsViewController: UIViewController {
         //        view.backgroundColor = .black
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.registerCell(HomeConversationsTableViewCell.identifier)
         tableView.reloadData()
         //        tableView.backgroundColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
@@ -274,18 +275,10 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.identifier ,for: indexPath) as! ConversationTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeConversationsTableViewCell.identifier ,for: indexPath) as? HomeConversationsTableViewCell else {
+            fatalError()
+        }
         let model = conversations[indexPath.row]
-        cell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0)
-        let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: cell.frame.width, height: cell.frame.height))
-        
-        //        let image = UIImage(named: "lcu-beta-update-2-banner")
-        //        imageView.image = image
-        imageView.layer.cornerRadius = 10
-        //        imageView.contentMode = .scaleAspectFill
-        cell.backgroundView = UIView()
-        cell.backgroundView!.addSubview(imageView)
-        //        cell.backgroundColor = .black
         cell.configure(with: model)
         return cell
     }
@@ -305,7 +298,7 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -367,5 +360,16 @@ extension UITableView {
     
     enum scrollsTo {
         case top,bottom
+    }
+}
+
+extension  UITableView {
+    func registerCell(_ nibName: String, identifier: String = "", bundle: Bundle? = nil ) {
+        var identifier = identifier
+        if identifier.isEmpty {
+            identifier = nibName
+        }
+        let nib: UINib = UINib(nibName: nibName, bundle: bundle)
+        self.register(nib, forCellReuseIdentifier: identifier)
     }
 }
