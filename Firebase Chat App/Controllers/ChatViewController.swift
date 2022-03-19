@@ -77,10 +77,12 @@ class ChatViewController: MessagesViewController {
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .medium
         dateFormatter.locale = .current
+        dateFormatter.dateFormat = "dd/MM/yy, hh:mm:ss a"
         return dateFormatter
     }()
     public var isNewConverstion = false
     public var otherUserEmail :  String = ""
+    public var otherUserToken : String = ""
     private var conversationId :  String?
     
     private var selfSender:Sender? {
@@ -97,9 +99,10 @@ class ChatViewController: MessagesViewController {
    
     private var messages = [Message]()
     
-    init(with email:String, id:String?) {
+    init(with email:String, id:String?, token: String) {
         self.conversationId = id
         self.otherUserEmail = email
+        self.otherUserToken = token
         
         super.init(nibName: nil, bundle: nil)
         if let conversationId = conversationId {
@@ -211,7 +214,7 @@ class ChatViewController: MessagesViewController {
                                       sentDate: Date(),
                                       kind: .location(location))
 
-                DatabaseManager.shared.sendMessages(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, name: name, newMessage: message, completion: { success in
+                DatabaseManager.shared.sendMessages(to: conversationId, otherUserEmail: strongSelf.otherUserEmail, otherUserToken: strongSelf.otherUserToken, name: name, newMessage: message, completion: { success in
                     if success {
                         print("sent location message")
                     }
@@ -388,7 +391,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
                                           kind: .photo(media))
                     
                     DatabaseManager.shared.sendMessages(to: conversationId,
-                                                        otherUserEmail: strongSelf.otherUserEmail,
+                                                        otherUserEmail: strongSelf.otherUserEmail, otherUserToken: strongSelf.otherUserToken,
                                                         name: name,
                                                         newMessage: message,
                                                         completion: { success in
@@ -434,7 +437,7 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
                                           kind: .video(media))
                     
                     DatabaseManager.shared.sendMessages(to: conversationId,
-                                                        otherUserEmail: strongSelf.otherUserEmail,
+                                                        otherUserEmail: strongSelf.otherUserEmail, otherUserToken: strongSelf.otherUserToken,
                                                         name: name,
                                                         newMessage: message,
                                                         completion: { success in
@@ -474,7 +477,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
         print("Sendind Text: \(text)")
         if isNewConverstion {
              
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name:self.title ?? "user",
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, token: otherUserToken ,name:self.title ?? "user",
                                                          firstMessage: message,
                                                          completion: { [weak self] success in
                                                             if success{
@@ -497,7 +500,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
                 return
             }
             //append existing conversation data
-            DatabaseManager.shared.sendMessages(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message, completion: { [weak self] success in
+            DatabaseManager.shared.sendMessages(to: conversationId, otherUserEmail: otherUserEmail, otherUserToken: otherUserToken ,name: name, newMessage: message, completion: { [weak self] success in
                 if success {
                     print("message send")
                     self?.messageInputBar.inputTextView.text = nil

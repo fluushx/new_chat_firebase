@@ -16,6 +16,7 @@ struct Conversation {
     let id:String
     let name:String
     let otherUserEmail: String
+    let otherUserToken: String
     let lastedMessage: LastedMessage
     
 }
@@ -173,7 +174,7 @@ class ConversationsViewController: UIViewController {
             if let tarjetConversations = currentConversation.first(where: {
                 $0.otherUserEmail == DatabaseManager.safeEmail(emailAddress: result.email)
             }){
-                let vc = ChatViewController(with: tarjetConversations.otherUserEmail, id:tarjetConversations.id)
+                let vc = ChatViewController(with: tarjetConversations.otherUserEmail, id:tarjetConversations.id, token: tarjetConversations.otherUserToken)
                 vc.isNewConverstion = false
                 vc.title = tarjetConversations.name
                 vc.navigationItem.largeTitleDisplayMode  = .never
@@ -190,6 +191,7 @@ class ConversationsViewController: UIViewController {
     private func createNewConversation(result: SearchResult){
         let name = result.name
         let email =  DatabaseManager.safeEmail(emailAddress: result.email)
+        let token = result.deviceToken
          
         //check in database if conversation with these two user exist
         //if it does, reuse conversation id,
@@ -203,20 +205,20 @@ class ConversationsViewController: UIViewController {
             switch result{
                 
             case .success(let conversationId):
-                let vc = ChatViewController(with: email, id: conversationId)
+                let vc = ChatViewController(with: email, id: conversationId, token: token)
                 vc.isNewConverstion = false
                 vc.title = name
                 vc.navigationItem.largeTitleDisplayMode  = .never
                 strongSelf.navigationController?.pushViewController(vc, animated: true)
             case .failure(_):
-                let vc = ChatViewController(with: email, id:nil)
+                let vc = ChatViewController(with: email, id:nil, token: token)
                 vc.isNewConverstion = true
                 vc.title = name
                 vc.navigationItem.largeTitleDisplayMode  = .never
                 strongSelf.navigationController?.pushViewController(vc, animated: true)
             }
         })
-        let vc = ChatViewController(with: email, id: nil)
+        let vc = ChatViewController(with: email, id: nil, token: token)
         vc.isNewConverstion = true
         vc.title = name
         vc.navigationItem.largeTitleDisplayMode  = .never
@@ -255,7 +257,7 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
     }
     
     func openConversation(_ model : Conversation){
-        let vc = ChatViewController(with: model.otherUserEmail, id: model.id)
+        let vc = ChatViewController(with: model.otherUserEmail, id: model.id, token: model.otherUserToken)
         vc.title = model.name
         vc.navigationItem.largeTitleDisplayMode  = .never
         navigationController?.pushViewController(vc, animated: true)

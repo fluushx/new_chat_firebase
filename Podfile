@@ -14,6 +14,7 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Messaging'
 
+pod 'Alamofire'
 pod 'FBSDKLoginKit'
 pod 'GoogleSignIn'
 pod 'JGProgressHUD'

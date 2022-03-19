@@ -122,11 +122,12 @@ extension NewConversationViewController: UISearchBarDelegate {
             return name.hasPrefix(term.lowercased())
         }).compactMap({
             guard let email = $0["email"],
-                    let name = $0["name"] else {
+                    let name = $0["name"],
+                    let deviceToken = $0["deviceToken"] else {
                 return nil
             }
             
-            return SearchResult(name: name, email: email)
+            return SearchResult(name: name, email: email, deviceToken: deviceToken)
         })
         self.results  = results
         updateUI()
@@ -177,5 +178,5 @@ extension NewConversationViewController:UITableViewDelegate,UITableViewDataSourc
 struct SearchResult {
     let name: String
     let email: String
-    
+    let deviceToken : String
 }

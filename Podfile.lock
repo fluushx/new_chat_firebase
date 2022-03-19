@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.4.4)
   - AppAuth (1.4.0):
     - AppAuth/Core (= 1.4.0)
     - AppAuth/ExternalUserAgent (= 1.4.0)
@@ -167,6 +168,7 @@ PODS:
   - SDWebImage/Core (5.12.1)
 
 DEPENDENCIES:
+  - Alamofire
   - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
@@ -183,6 +185,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - AppAuth
     - FBAEMKit
     - FBSDKCoreKit
@@ -215,6 +218,7 @@ SPEC REPOS:
     - SDWebImage
 
 SPEC CHECKSUMS:
+  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   FBAEMKit: 56c0bb9b42e3747cd82b67934f0c2b19325382ea
   FBSDKCoreKit: 75368765d9c2303073145a7925dfaa9d60bcd77b
@@ -246,6 +250,6 @@ SPEC CHECKSUMS:
   RealmSwift: 9b02d25acb46a14756bde9893abb99e2e3675923
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
 
-PODFILE CHECKSUM: fdc3e7102815caca18e739e288532e6327b985fa
+PODFILE CHECKSUM: 3de9a7e06b89777e11ae8edcfd85f39733bcab50
 
 COCOAPODS: 1.11.2
