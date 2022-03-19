@@ -235,10 +235,12 @@ class RegisterViewController: UIViewController {
                       print("Error fetching FCM registration token: \(error)")
                       let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail, deviceToken: "deviceToken")
                       strongSelf.insertUserData(user: chatUser)
+                      UserDefaults.standard.set("deviceToken", forKey: "deviceToken")
                   } else if let token = token {
                       print("FCM registration token: \(token)")
                       let chatUser =  ChatAppUser(firstName: firstName, lastName: lasttNameField, mail: mail, deviceToken: token)
                       strongSelf.insertUserData(user: chatUser)
+                      UserDefaults.standard.set(token, forKey: "deviceToken")
                   }
                 }
                 

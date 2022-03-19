@@ -263,10 +263,12 @@ class LoginViewController: UIViewController {
                             print("Error fetching FCM registration token: \(error)")
                             let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: email, deviceToken: "deviceToken")
                             self.insertUserDetail(user: user, chatUser: chatUser)
+                            UserDefaults.standard.set("deviceToken", forKey: "deviceToken")
                         } else if let token = token {
                             print("FCM registration token: \(token)")
                             let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: email, deviceToken: token)
                             self.insertUserDetail(user: user, chatUser: chatUser)
+                            UserDefaults.standard.set(token, forKey: "deviceToken")
                         }
                     }
                     
@@ -554,10 +556,12 @@ extension LoginViewController: LoginButtonDelegate{
                             print("Error fetching FCM registration token: \(error)")
                             let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: userMail, deviceToken: "deviceToken")
                             self.insertUserDetailForFB(chatUser: chatUser, pictureUrl: pictureUrl)
+                            UserDefaults.standard.set("deviceToken", forKey: "deviceToken")
                         } else if let token = token {
                             print("FCM registration token: \(token)")
                             let chatUser =  ChatAppUser(firstName: firstName, lastName: lastName, mail: userMail, deviceToken: token)
                             self.insertUserDetailForFB(chatUser: chatUser, pictureUrl: pictureUrl)
+                            UserDefaults.standard.set(token, forKey: "deviceToken")
                         }
                     }
                 }

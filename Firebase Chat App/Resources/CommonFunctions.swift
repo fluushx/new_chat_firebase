@@ -41,6 +41,8 @@ class CommonFunctions: NSObject {
         
         let parameters : [String : Any] = [
             "to" : toDeviceToken,
+            "priority": "high",
+            "content_available": true,
             "notification": notificationObject,
             "data" : dataObject
         ]

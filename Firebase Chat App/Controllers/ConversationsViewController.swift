@@ -99,6 +99,7 @@ class ConversationsViewController: UIViewController {
             }
             
         })
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -133,6 +134,7 @@ class ConversationsViewController: UIViewController {
             if let token = token {
                 print("FCM registration token: \(token)")
                 DatabaseManager.shared.updateDeviceToken(email: currentUser.email ?? "N/A", deviceToken: token)
+                UserDefaults.standard.set(token, forKey: "deviceToken")
             }
         }
     }
@@ -178,7 +180,7 @@ class ConversationsViewController: UIViewController {
                 
                 
                 if let emailTapped = UserDefaults.standard.string(forKey: "notificationTappedEmail") {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                         guard let strongSelf = self else { return }
                         let emailToCheck = DatabaseManager.safeEmail(emailAddress: emailTapped)
                         for conversation in strongSelf.conversations {

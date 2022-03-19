@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        
+            
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
@@ -72,11 +72,11 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
-        if let userInfoObject = userInfo as? [String : Any], let data = userInfoObject["data"] as? [String : Any] {
-            if let email = data["user_email"] as? String {
+        if let userInfoObject = userInfo as? [String : Any] {
+            if let email = userInfoObject["user_email"] as? String {
                 UserDefaults.standard.set(email, forKey: "notificationTappedEmail")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationTapped"), object: nil, userInfo: data)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationTapped"), object: nil, userInfo: userInfoObject)
                 })
             }
         }
