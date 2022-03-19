@@ -123,8 +123,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.inputTextView.becomeFirstResponder()
         setUpInputButton()
-        
-    
     }
     
     

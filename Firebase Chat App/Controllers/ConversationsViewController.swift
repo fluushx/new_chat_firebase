@@ -32,6 +32,8 @@ class ConversationsViewController: UIViewController {
     
     private var conversations = [Conversation]()
     
+    var notificationTappedEmail : String = "rsdm55@gmail.com"
+    
     private let tableView : UITableView = {
         let tableView = UITableView()
         tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.identifier)
@@ -52,44 +54,63 @@ class ConversationsViewController: UIViewController {
         return noConversation
     }()
     override open var shouldAutorotate: Bool {
-           return false
-       }
+        return false
+    }
     
     private var loginObserver: NSObjectProtocol?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-//        view.backgroundColor = .black
+        //        view.backgroundColor = .black
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-//        tableView.backgroundColor = .black
+        //        tableView.backgroundColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search,
                                                             target: self,
                                                             action: #selector(didTapComposeButton))
         startListeningForConversations()
         
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification,
-                                                   object: nil,
-                                                   queue: .main,
-                                                   using: { [weak self] _ in
-                                                    guard let strongSelf = self else {
-                                                        return
-                                                    }
+                                                               object: nil,
+                                                               queue: .main,
+                                                               using: { [weak self] _ in
+            guard let strongSelf = self else {
+                return
+            }
             strongSelf.startListeningForConversations()
-                                                   })
-              }
-
+        })
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "notificationTapped"), object: nil, queue: .main, using: { notificationData in
+            print(notificationData)
+            
+            if let userInfo = notificationData.userInfo as? [String : Any] {
+                if let email = userInfo["user_email"] as? String {
+                    let emailToCheck = DatabaseManager.safeEmail(emailAddress: email)
+                    for conversation in self.conversations {
+                        if conversation.otherUserEmail == emailToCheck {
+                            let model = conversation
+                            self.openConversation(model)
+                            UserDefaults.standard.removeObject(forKey: "notificationTappedEmail")
+                            break
+                        }
+                    }
+                }
+            }
+            
+        })
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-         validateAuth()
+        validateAuth()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setUpTableView()
         setUpNoConversaationLabel()
-
+        
     }
     
     func setUpNoConversaationLabel(){
@@ -99,7 +120,7 @@ class ConversationsViewController: UIViewController {
     }
     
     private func validateAuth(){
-      
+        
         guard let currentUser = FirebaseAuth.Auth.auth().currentUser else {
             let vc = LoginViewController()
             let nav = UINavigationController(rootViewController: vc)
@@ -109,10 +130,10 @@ class ConversationsViewController: UIViewController {
         }
         
         Messaging.messaging().token { token, error in
-          if let token = token {
-              print("FCM registration token: \(token)")
-              DatabaseManager.shared.updateDeviceToken(email: currentUser.email ?? "N/A", deviceToken: token)
-          }
+            if let token = token {
+                print("FCM registration token: \(token)")
+                DatabaseManager.shared.updateDeviceToken(email: currentUser.email ?? "N/A", deviceToken: token)
+            }
         }
     }
     
@@ -123,7 +144,7 @@ class ConversationsViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-     
+    
     
     private func startListeningForConversations(){
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
@@ -154,6 +175,24 @@ class ConversationsViewController: UIViewController {
                     self!.tableView.reloadData()
                     self!.tableView.scroll(to: .top, animated: true)
                 }
+                
+                
+                if let emailTapped = UserDefaults.standard.string(forKey: "notificationTappedEmail") {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                        guard let strongSelf = self else { return }
+                        let emailToCheck = DatabaseManager.safeEmail(emailAddress: emailTapped)
+                        for conversation in strongSelf.conversations {
+                            if conversation.otherUserEmail ==  emailToCheck {
+                                let model = conversation
+                                strongSelf.openConversation(model)
+                                UserDefaults.standard.removeObject(forKey: "notificationTappedEmail")
+                                break
+                            }
+                        }
+                    })
+                    
+                }
+                
             case .failure(let error):
                 self?.tableView.isHidden = true
                 self?.noConversation.isHidden = false
@@ -185,14 +224,14 @@ class ConversationsViewController: UIViewController {
         }
         let navVC = UINavigationController(rootViewController: vc)
         present(navVC, animated: true)
-         
+        
     }
     
     private func createNewConversation(result: SearchResult){
         let name = result.name
         let email =  DatabaseManager.safeEmail(emailAddress: result.email)
         let token = result.deviceToken
-         
+        
         //check in database if conversation with these two user exist
         //if it does, reuse conversation id,
         //othewise user existing code
@@ -238,22 +277,22 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
         cell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0)
         let imageView = UIImageView(frame: CGRect(x: 10, y: 10, width: cell.frame.width, height: cell.frame.height))
         
-//        let image = UIImage(named: "lcu-beta-update-2-banner")
-//        imageView.image = image
+        //        let image = UIImage(named: "lcu-beta-update-2-banner")
+        //        imageView.image = image
         imageView.layer.cornerRadius = 10
-//        imageView.contentMode = .scaleAspectFill
+        //        imageView.contentMode = .scaleAspectFill
         cell.backgroundView = UIView()
         cell.backgroundView!.addSubview(imageView)
-//        cell.backgroundColor = .black
+        //        cell.backgroundColor = .black
         cell.configure(with: model)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
         let model = conversations[indexPath.row]
         openConversation(model)
-         
+        
     }
     
     func openConversation(_ model : Conversation){
@@ -279,13 +318,13 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
             tableView.beginUpdates()
             DatabaseManager.shared.deleteConversation(conversationId: conversationId, completion: { [weak self] success in
                 if !success {
-//                    self?.conversations.remove(at: indexPath.row)
-//                    tableView.deleteRows(at: [indexPath], with: .left)
-
+                    //                    self?.conversations.remove(at: indexPath.row)
+                    //                    tableView.deleteRows(at: [indexPath], with: .left)
+                    
                 }
-            
+                
             })
- 
+            
             tableView.endUpdates()
         }
     }
@@ -293,7 +332,7 @@ extension ConversationsViewController: UITableViewDelegate,UITableViewDataSource
 }
 
 extension UITableView {
-
+    
     public func reloadData(_ completion: @escaping ()->()) {
         UIView.animate(withDuration: 0, animations: {
             self.reloadData()
@@ -301,7 +340,7 @@ extension UITableView {
             completion()
         })
     }
-
+    
     func scroll(to: scrollsTo, animated: Bool) {
         print("scrolling")
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
@@ -310,8 +349,8 @@ extension UITableView {
             switch to{
             case .top:
                 if numberOfRows > 0 {
-                     let indexPath = IndexPath(row: 0, section: 0)
-                     self.scrollToRow(at: indexPath, at: .top, animated: animated)
+                    let indexPath = IndexPath(row: 0, section: 0)
+                    self.scrollToRow(at: indexPath, at: .top, animated: animated)
                 }
                 break
             case .bottom:
@@ -323,7 +362,7 @@ extension UITableView {
             }
         }
     }
-
+    
     enum scrollsTo {
         case top,bottom
     }

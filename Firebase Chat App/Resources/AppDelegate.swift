@@ -65,29 +65,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate : UNUserNotificationCenterDelegate {
     
     // Receive displayed notifications for iOS 10 devices.
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        // let userInfo = notification.request.content.userInfo
-        completionHandler([.badge, .sound])
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
-        // let userInfo = response.notification.request.content.userInfo
-        completionHandler()
-    }
-    
-    func convertToDictionary(text: String) -> [String: Any]? {
-        if let data = text.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let userInfoObject = userInfo as? [String : Any], let data = userInfoObject["data"] as? [String : Any] {
+            if let email = data["user_email"] as? String {
+                UserDefaults.standard.set(email, forKey: "notificationTappedEmail")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationTapped"), object: nil, userInfo: data)
+                })
             }
         }
-        return nil
+        
+        completionHandler()
     }
     
 }
