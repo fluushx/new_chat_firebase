@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FBSDKLoginKit
 import GoogleSignIn
+import FirebaseMessaging
 
 enum ProfileViewModelType {
     case logout, info
@@ -26,7 +27,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ProfileTableViewCell.self,
-                                   forCellReuseIdentifier: ProfileTableViewCell.identifier)
+                           forCellReuseIdentifier: ProfileTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -36,46 +37,51 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         view.addSubview(tableView)
         tableView.backgroundColor = .lightGray
         data.append(ProfileViewModel(viewModelType: .info,
-                                             title: "Nombre: \(UserDefaults.standard.value(forKey:"name") as? String ?? "No Name")",
-                                             handler: nil))
+                                     title: "Nombre: \(UserDefaults.standard.value(forKey:"name") as? String ?? "No Name")",
+                                     handler: nil))
         data.append(ProfileViewModel(viewModelType: .info,
-                                             title: "Email: \(UserDefaults.standard.value(forKey:"email") as? String ?? "No Email")",
-                                             handler: nil))
+                                     title: "Email: \(UserDefaults.standard.value(forKey:"email") as? String ?? "No Email")",
+                                     handler: nil))
         data.append(ProfileViewModel(viewModelType: .logout,
-                                             title: "Salir",
-                                             handler: { [weak self] in
+                                     title: "Salir",
+                                     handler: { [weak self] in
             
             guard let strongSelf = self else {
                 return
             }
             let actionSheet = UIAlertController(title: "¿Estas seguro?",
-                                          message: "Salir",
-                                          preferredStyle: .alert)
+                                                message: "Salir",
+                                                preferredStyle: .alert)
             actionSheet.addAction(UIAlertAction(title: "Salir",
-                                          style: .destructive,
-                                          handler: { [weak self] _ in
-                                            guard let strongSelf = self else {
-                                                return
-                                            }
+                                                style: .destructive,
+                                                handler: { [weak self] _ in
+                guard let strongSelf = self else {
+                    return
+                }
                 
+                let currentEmail = UserDefaults.standard.value(forKey: "email") as? String ?? "N/A"
                 UserDefaults.standard.set(nil, forKey: "email")
                 UserDefaults.standard.set(nil, forKey: "name")
-                                            FBSDKLoginKit.LoginManager().logOut()
-                                            
-                                            GIDSignIn.sharedInstance.signOut()
-                                            
-                                            do {
-                                                try FirebaseAuth.Auth.auth().signOut()
-                                                let vc = LoginViewController()
-                                                let nav = UINavigationController(rootViewController: vc)
-                                                nav.modalPresentationStyle = .fullScreen
-                                                strongSelf.present(nav, animated: false)
-                                            }
-                                            catch {
-                                                print("Failed to Log out")
-                                            }
-                                            
-                                          }))
+                FBSDKLoginKit.LoginManager().logOut()
+                
+                GIDSignIn.sharedInstance.signOut()
+                
+                do {
+                    try FirebaseAuth.Auth.auth().signOut()
+                    Messaging.messaging().deleteToken(completion: { error in
+                        print("ERROR IN DELETING TOKEN")
+                    })
+                    DatabaseManager.shared.updateDeviceToken(email: currentEmail, deviceToken: "NULL")
+                    let vc = LoginViewController()
+                    let nav = UINavigationController(rootViewController: vc)
+                    nav.modalPresentationStyle = .fullScreen
+                    strongSelf.present(nav, animated: false)
+                }
+                catch {
+                    print("Failed to Log out")
+                }
+                
+            }))
             actionSheet.addAction(UIAlertAction(title: "Cancelar",
                                                 style: .cancel,
                                                 handler: nil))
@@ -88,12 +94,12 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         view.backgroundColor = .systemBackground
         
     }
-     
+    
     func createTableHeader()->UIView{
         
         let headerView : UIView = {
             let headerView = UIView()
-//            headerView.backgroundColor = UIColor(red: 51/255.0, green: 138/255.0, blue: 255/255.0, alpha: 1.0)
+            //            headerView.backgroundColor = UIColor(red: 51/255.0, green: 138/255.0, blue: 255/255.0, alpha: 1.0)
             headerView.translatesAutoresizingMaskIntoConstraints = false
             headerView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200)
             headerView.layer.borderColor = UIColor.white.cgColor
@@ -109,12 +115,12 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
             imageView.center = view.center
             headerView.addSubview(imageView)
             headerView.layer.cornerRadius = 10
-
+            
             return headerView
         }()
         
         let imageView: UIImageView = {
-           let imageView = UIImageView()
+            let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFill
             imageView.layer.masksToBounds = true
             imageView.layer.cornerRadius = 75
@@ -129,11 +135,11 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }()
         
         headerView.addSubview(imageView)
-//        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
-//            return headerView
-//                }
+        //        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+        //            return headerView
+        //                }
         
-         let email = UserDefaults.standard.value(forKey: "email") as? String
+        let email = UserDefaults.standard.value(forKey: "email") as? String
         let safeEmail = DatabaseManager.safeEmail(emailAddress: email ?? "no mail")
         let fileName = safeEmail + "_profile_picture.png"
         let path = "images"+fileName
@@ -141,13 +147,13 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         
         storageManager.shared.downloadURL(for: path, completion: { result in
-                    switch result {
-                    case .success(let url):
-                        imageView.sd_setImage(with: url, completed: nil)
-                    case .failure(let error):
-                        print("Failed to get download url: \(error)")
-                    }
-                })
+            switch result {
+            case .success(let url):
+                imageView.sd_setImage(with: url, completed: nil)
+            case .failure(let error):
+                print("Failed to get download url: \(error)")
+            }
+        })
         return headerView
     }
     func setUpTableView(){
@@ -156,7 +162,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate,UITableViewDat
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-     
+    
 }
 extension ProfileViewController {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,8 +179,8 @@ extension ProfileViewController {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         data[indexPath.row].handler?()
-         
-         
+        
+        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
@@ -182,10 +188,10 @@ extension ProfileViewController {
     
 }
 class ProfileTableViewCell: UITableViewCell {
-
+    
     static let identifier = "ProfileTableViewCell"
     
-
+    
     public func setUp(with viewModel: ProfileViewModel) {
         self.textLabel?.text = viewModel.title
         switch viewModel.viewModelType {
@@ -194,12 +200,12 @@ class ProfileTableViewCell: UITableViewCell {
             textLabel?.textAlignment = .center
             layer.masksToBounds = true
             textLabel!.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
-
+            
         case .info:
             textLabel?.textAlignment = .left
             selectionStyle = .none
             textLabel!.font = UIFont(name: "Avenir-Light", size: 18)
         }
     }
-
+    
 }

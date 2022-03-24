@@ -147,6 +147,7 @@ extension DatabaseManager {
                     if let currentUserMail = currentUser["email"] {
                         if currentUserMail == DatabaseManager.safeEmail(emailAddress: email) {
                             self.database.child("users").child("\(indexOf)").child("deviceToken").setValue(deviceToken)
+                            self.database.child(currentUserMail).child("deviceToken").setValue(deviceToken)
                             break
                         }
                     }
